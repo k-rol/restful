@@ -13,12 +13,16 @@ device {
                 -lQtNetwork
 
         SOURCES +=  $$quote($$BASEDIR/src/GetRequests.cpp) \
+                 $$quote($$BASEDIR/src/ListDataModel.cpp) \
                  $$quote($$BASEDIR/src/PostRequests.cpp) \
+                 $$quote($$BASEDIR/src/QBookmarks.cpp) \
                  $$quote($$BASEDIR/src/applicationui.cpp) \
                  $$quote($$BASEDIR/src/main.cpp)
 
         HEADERS +=  $$quote($$BASEDIR/src/GetRequests.h) \
+                 $$quote($$BASEDIR/src/ListDataModel.h) \
                  $$quote($$BASEDIR/src/PostRequests.h) \
+                 $$quote($$BASEDIR/src/QBookmarks.h) \
                  $$quote($$BASEDIR/src/applicationui.hpp)
     }
 
@@ -33,12 +37,16 @@ device {
                 -lQtNetwork
 
         SOURCES +=  $$quote($$BASEDIR/src/GetRequests.cpp) \
+                 $$quote($$BASEDIR/src/ListDataModel.cpp) \
                  $$quote($$BASEDIR/src/PostRequests.cpp) \
+                 $$quote($$BASEDIR/src/QBookmarks.cpp) \
                  $$quote($$BASEDIR/src/applicationui.cpp) \
                  $$quote($$BASEDIR/src/main.cpp)
 
         HEADERS +=  $$quote($$BASEDIR/src/GetRequests.h) \
+                 $$quote($$BASEDIR/src/ListDataModel.h) \
                  $$quote($$BASEDIR/src/PostRequests.h) \
+                 $$quote($$BASEDIR/src/QBookmarks.h) \
                  $$quote($$BASEDIR/src/applicationui.hpp)
     }
 }
@@ -55,12 +63,16 @@ simulator {
                 -lQtNetwork
 
         SOURCES +=  $$quote($$BASEDIR/src/GetRequests.cpp) \
+                 $$quote($$BASEDIR/src/ListDataModel.cpp) \
                  $$quote($$BASEDIR/src/PostRequests.cpp) \
+                 $$quote($$BASEDIR/src/QBookmarks.cpp) \
                  $$quote($$BASEDIR/src/applicationui.cpp) \
                  $$quote($$BASEDIR/src/main.cpp)
 
         HEADERS +=  $$quote($$BASEDIR/src/GetRequests.h) \
+                 $$quote($$BASEDIR/src/ListDataModel.h) \
                  $$quote($$BASEDIR/src/PostRequests.h) \
+                 $$quote($$BASEDIR/src/QBookmarks.h) \
                  $$quote($$BASEDIR/src/applicationui.hpp)
     }
 }

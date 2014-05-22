@@ -15,6 +15,7 @@
  */
 
 import bb.cascades 1.2
+import QBookmarks 1.0
 
 TabbedPane {
     Tab {
@@ -22,7 +23,7 @@ TabbedPane {
         title: "GET"
         delegate: Delegate {
             id: delegateGet
-            source: "asset:///get.qml"
+            source: "asset:///Get.qml"
         }
      
         delegateActivationPolicy: TabDelegateActivationPolicy.ActivateImmediately
@@ -33,7 +34,7 @@ TabbedPane {
         title: "POST"
         delegate: Delegate {
             id: delegatePost
-         //   source: "asset:///post.qml"
+         //   source: "asset:///Post.qml"
         }
         delegateActivationPolicy: TabDelegateActivationPolicy.ActivateImmediately
     }
@@ -44,7 +45,7 @@ TabbedPane {
         title: "Bookmarks"
         delegate: Delegate {
             id: delegateBookmarks
-           // source: "asset:///bookmarks.qml"
+            source: "asset:///Bookmarks.qml"
         }
         delegateActivationPolicy: TabDelegateActivationPolicy.ActivateImmediately
     }

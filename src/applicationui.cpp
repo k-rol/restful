@@ -44,11 +44,74 @@ ApplicationUI::ApplicationUI(bb::cascades::Application *app) :
     // to ensure the document gets destroyed properly at shut down.
     QmlDocument *qml = QmlDocument::create("asset:///main.qml").parent(this);
 
+
+    qml->setContextProperty("_app", this);
+    m_dataModel = new GroupDataModel(this);
+    m_dataModel->setSortingKeys(QStringList() << "customerID");
+    m_dataModel->setGrouping(ItemGrouping::None);
+
+    addObject();
     // Create root object for the UI
     AbstractPane *root = qml->createRootObject<AbstractPane>();
 
     // Set created root object as the application scene
     app->setScene(root);
+}
+
+GroupDataModel* ApplicationUI::dataModel() const
+{
+    return m_dataModel;
+}
+
+void ApplicationUI::addObject()
+{
+
+	m_dataModel->setParent(this);
+	m_dataModel->clear();
+
+
+    QVariantMap map;
+    map.insert("firstName", "John");
+	map.insert("lastName", "7Grain");
+	map.insert("customerID", 1);
+
+	m_dataModel->insert(map);
+
+    map.insert("firstName", "Carol");
+	map.insert("lastName", "Touss");
+	map.insert("customerID", 2);
+
+
+    m_dataModel->insert(map);
+
+}
+
+void ApplicationUI::deleteObject(const QString &customerID)
+{
+//    bool deleted = false;
+//    bool saved = false;
+//
+//    if (!validateID(customerID))
+//        return false;
+//
+//    // Create a person object with the required id.
+//    // The name can be left out because find() will use the == operator
+//    // defined in the Person class. See Person.cpp
+//    Person *person = new Person(customerID, QString(), QString());
+//
+//    const QVariantList deleteIndexPath = m_dataModel->find(person);
+//
+//    if (deleteIndexPath.isEmpty()) {
+//        alert(tr("Object ID not found."));
+//    } else {
+//        deleted = m_dataModel->removeAt(deleteIndexPath);
+//    }
+//
+//    if (deleted) {
+//        saved = m_storage->save(m_lastCustomerID, m_dataModel);
+//    }
+
+
 }
 
 void ApplicationUI::onSystemLanguageChanged()

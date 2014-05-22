@@ -18,6 +18,9 @@
 #define ApplicationUI_HPP_
 
 #include <QObject>
+#include <bb/cascades/GroupDataModel>
+
+using namespace bb::cascades;
 
 namespace bb
 {
@@ -39,6 +42,8 @@ class QTranslator;
 class ApplicationUI : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(bb::cascades::DataModel* dataModel READ dataModel CONSTANT)
+
 public:
     ApplicationUI(bb::cascades::Application *app);
     virtual ~ApplicationUI() { }
@@ -47,6 +52,13 @@ private slots:
 private:
     QTranslator* m_pTranslator;
     bb::cascades::LocaleHandler* m_pLocaleHandler;
+
+    void addObject();
+    void deleteObject(const QString &customerID);
+
+    bb::cascades::GroupDataModel* dataModel() const;
+
+    GroupDataModel* m_dataModel;
 };
 
 #endif /* ApplicationUI_HPP_ */
