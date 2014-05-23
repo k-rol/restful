@@ -58,9 +58,8 @@ Page {
                 onClicked: {
                     if (saveButton.text == "Save") {
                         saveButton.text = "Saved!"
-                        //save in QSettings
                     }
-                    
+                    _app.addObject(commandtxt.text)
                 }
             }
         }

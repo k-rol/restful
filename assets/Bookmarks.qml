@@ -8,39 +8,42 @@ Page {
     Container {
 
         ListView {
+            id: listview
             dataModel: _app.dataModel
             listItemComponents: [
                 ListItemComponent {
                     type: "item"
                     StandardListItem {
                         
-                        title: qsTr("%1 %2").arg(ListItemData.firstName).arg(ListItemData.lastName)
-                        description: qsTr("Unique Key: %1").arg(ListItemData.customerID)
+                        title: qsTr(ListItemData.name)
+                        description: qsTr(ListItemData.link)
                         
-                        contextActions: [
-                            ActionSet {
-                                title: "Link"
-                                ActionItem {
-                                    title: "Delete"
-                                    onTriggered: {
 
-                                        console.debug("this:")
-                                        console.debug(seindexPath)
-                                        
-                                    }
-                                }
-                            }
-                        ]
                     }
                 }
             ]
             onTriggered: {
                 var selectedItem = dataModel.data(indexPath);
-                textField.text = selectedItem.firstName
+                textField.text = selectedItem.name
                 console.debug("this:")
                 console.debug(indexPath)
-                console.debug(selectedItem.firstName)
+                console.debug(selectedItem.name)
             }
+            contextActions: [
+                ActionSet {
+                    DeleteActionItem {
+                        onTriggered: {
+                            
+                            console.debug("this:")
+                            console.debug(listview.selected())
+                            var selectedItem = listview.dataModel.data(listview.selected())
+                            textField.text = selectedItem.name + " Deleted"
+                            _app.deleteObject(listview.selected())
+                        
+                        }
+                    }
+                }
+            ]
         }
         TextField {
             id: textField

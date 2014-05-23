@@ -21,6 +21,14 @@
 #include <bb/cascades/AbstractPane>
 #include <bb/cascades/LocaleHandler>
 
+#include <bb/system/SystemDialog>
+#include <bb/system/SystemPrompt>
+
+#include <QDebug>
+
+//alert
+using namespace bb::system;
+
 using namespace bb::cascades;
 
 ApplicationUI::ApplicationUI(bb::cascades::Application *app) :
@@ -46,11 +54,8 @@ ApplicationUI::ApplicationUI(bb::cascades::Application *app) :
 
 
     qml->setContextProperty("_app", this);
-    m_dataModel = new GroupDataModel(this);
-    m_dataModel->setSortingKeys(QStringList() << "customerID");
-    m_dataModel->setGrouping(ItemGrouping::None);
 
-    addObject();
+    addSavedObject();
     // Create root object for the UI
     AbstractPane *root = qml->createRootObject<AbstractPane>();
 
@@ -63,32 +68,45 @@ GroupDataModel* ApplicationUI::dataModel() const
     return m_dataModel;
 }
 
-void ApplicationUI::addObject()
+void ApplicationUI::addSavedObject()
 {
-
+    m_dataModel = new GroupDataModel(this);
+    m_dataModel->setSortingKeys(QStringList() << "customerID");
+    m_dataModel->setGrouping(ItemGrouping::None);
 	m_dataModel->setParent(this);
 	m_dataModel->clear();
 
+	//get stuff from QSettings...
 
+	//then
     QVariantMap map;
-    map.insert("firstName", "John");
-	map.insert("lastName", "7Grain");
-	map.insert("customerID", 1);
+    map.insert("name", "mocky ");
+	map.insert("link", "http://www.mocky.io/v2/537fb5da27a1c45703f807b6");
 
 	m_dataModel->insert(map);
 
-    map.insert("firstName", "Carol");
-	map.insert("lastName", "Touss");
-	map.insert("customerID", 2);
-
+    map.insert("name", "mocky2");
+	map.insert("link", "http://www.mocky.io/v2/537fb5da27a1c45703f807b6");
 
     m_dataModel->insert(map);
+}
+
+void ApplicationUI::addObject(const QString &link)
+{
+	QString name;
+	name = promptName("Links name:");
+
+    QVariantMap map;
+    map.insert("name", name);
+	map.insert("link", link);
+
+	m_dataModel->insert(map);
 
 }
 
-void ApplicationUI::deleteObject(const QString &customerID)
+void ApplicationUI::deleteObject(const QVariantList &indexPath)
 {
-//    bool deleted = false;
+    bool deleted = false;
 //    bool saved = false;
 //
 //    if (!validateID(customerID))
@@ -99,17 +117,77 @@ void ApplicationUI::deleteObject(const QString &customerID)
 //    // defined in the Person class. See Person.cpp
 //    Person *person = new Person(customerID, QString(), QString());
 //
-//    const QVariantList deleteIndexPath = m_dataModel->find(person);
-//
+	qDebug() << "indexpath:";
+	qDebug() << indexPath;
+	deleted = m_dataModel->removeAt(indexPath);
+
+	if (deleted)
+	{
+		alert(tr("deleted!"));
+	}
+
+//    const QVariantList deleteIndexPath = m_dataModel->find(map);
+
 //    if (deleteIndexPath.isEmpty()) {
 //        alert(tr("Object ID not found."));
 //    } else {
 //        deleted = m_dataModel->removeAt(deleteIndexPath);
 //    }
+
+}
+
+//void ApplicationUI::refreshObjects()
+//{
+//    const int objectsReadCount = load();
 //
-//    if (deleted) {
-//        saved = m_storage->save(m_lastCustomerID, m_dataModel);
+//    if (objectsReadCount == 0) {
+//        alert(tr("The customer list is empty."));
+//    } else {
+//        alert(tr("%1 objects loaded.").arg(objectsReadCount));
 //    }
+//}
+
+void ApplicationUI::alert(const QString &message)
+{
+    qDebug() << "alert: " << message;
+    SystemDialog *dialog; // SystemDialog uses the BB10 native dialog.
+    dialog = new SystemDialog(tr("OK"), 0); // New dialog with on 'Ok' button, no 'Cancel' button
+    dialog->setTitle(tr("Alert")); // set a title for the message
+    dialog->setBody(message); // set the message itself
+    dialog->setDismissAutomatically(true); // Hides the dialog when a button is pressed.
+
+    // Setup slot to mark the dialog for deletion in the next event loop after the dialog has been accepted.
+    bool ok = connect(dialog, SIGNAL(finished(bb::system::SystemUiResult::Type)), dialog, SLOT(deleteLater()));
+    Q_ASSERT(ok);
+    Q_UNUSED(ok);
+    dialog->show();
+}
+
+QString ApplicationUI::promptName(const QString &message)
+{
+	SystemPrompt *prompt = new SystemPrompt();
+	prompt->setTitle(message);
+	prompt->setDismissAutomatically(true);
+	prompt->inputField()->setEmptyText("Enter name...");
+
+	bool success = QObject::connect(prompt,
+	         SIGNAL(finished(bb::system::SystemUiResult::Type)),
+	         this,
+	         SLOT(onPromptFinished(bb::system::SystemUiResult::Type)));
+	//bool success = QObject::connect(prompt,SIGNAL(finished(bb::system::SystemUiResult::Type)),this,SLOT(onPromptFinished(bb::system::SystemUiResult::Type)));
+
+	if (success) {
+		prompt->show();
+		return prompt->title();
+	} else {
+        // Failed to connect to signal.
+        // This is not normal in most cases and can be a critical
+        // situation for your app! Make sure you know exactly why
+        // this has happened. Add some code to recover from the lost
+        // connection below this line.
+        prompt->deleteLater();
+        return "link";
+    }
 
 
 }

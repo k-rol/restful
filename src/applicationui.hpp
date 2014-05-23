@@ -47,14 +47,20 @@ class ApplicationUI : public QObject
 public:
     ApplicationUI(bb::cascades::Application *app);
     virtual ~ApplicationUI() { }
+
+    Q_INVOKABLE void addObject(const QString &link);
+
+    Q_INVOKABLE void deleteObject(const QVariantList &indexPath);
+
 private slots:
     void onSystemLanguageChanged();
 private:
+    void addSavedObject();
+    QString promptName(const QString &message);
+    void alert(const QString &message);
+
     QTranslator* m_pTranslator;
     bb::cascades::LocaleHandler* m_pLocaleHandler;
-
-    void addObject();
-    void deleteObject(const QString &customerID);
 
     bb::cascades::GroupDataModel* dataModel() const;
 

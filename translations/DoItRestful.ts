@@ -2,13 +2,17 @@
 <!DOCTYPE TS>
 <TS version="2.0">
 <context>
-    <name>Bookmarks</name>
+    <name>ApplicationUI</name>
     <message>
-        <source>%1 %2</source>
+        <source>deleted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unique Key: %1</source>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alert</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
