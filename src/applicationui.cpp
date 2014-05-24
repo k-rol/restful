@@ -91,10 +91,8 @@ void ApplicationUI::addSavedObject()
     m_dataModel->insert(map);
 }
 
-void ApplicationUI::addObject(const QString &link)
+void ApplicationUI::addObject(const QString &name, const QString &link)
 {
-	QString name;
-	name = promptName("Links name:");
 
     QVariantMap map;
     map.insert("name", name);
@@ -163,22 +161,22 @@ void ApplicationUI::alert(const QString &message)
     dialog->show();
 }
 
-QString ApplicationUI::promptName(const QString &message)
+void ApplicationUI::promptName(const QString &message, const QString &link)
 {
 	SystemPrompt *prompt = new SystemPrompt();
 	prompt->setTitle(message);
 	prompt->setDismissAutomatically(true);
 	prompt->inputField()->setEmptyText("Enter name...");
+	prompt->objectName() = link;
 
 	bool success = QObject::connect(prompt,
 	         SIGNAL(finished(bb::system::SystemUiResult::Type)),
 	         this,
 	         SLOT(onPromptFinished(bb::system::SystemUiResult::Type)));
-	//bool success = QObject::connect(prompt,SIGNAL(finished(bb::system::SystemUiResult::Type)),this,SLOT(onPromptFinished(bb::system::SystemUiResult::Type)));
 
 	if (success) {
 		prompt->show();
-		return prompt->title();
+
 	} else {
         // Failed to connect to signal.
         // This is not normal in most cases and can be a critical
@@ -186,10 +184,22 @@ QString ApplicationUI::promptName(const QString &message)
         // this has happened. Add some code to recover from the lost
         // connection below this line.
         prompt->deleteLater();
-        return "link";
+
     }
 
 
+}
+
+void ApplicationUI::onPromptFinished(bb::system::SystemUiResult::Type type)
+{
+	if (type == SystemUiResult::ConfirmButtonSelection) {
+
+		SystemPrompt* prompt = qobject_cast<SystemPrompt*>(sender());
+		qDebug() << prompt->inputFieldTextEntry();
+		qDebug() << prompt->objectName();
+	} else {
+		qDebug() << "this is some fucked up shit";
+	}
 }
 
 void ApplicationUI::onSystemLanguageChanged()

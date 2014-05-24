@@ -19,6 +19,7 @@
 
 #include <QObject>
 #include <bb/cascades/GroupDataModel>
+#include <bb/system/SystemPrompt>
 
 using namespace bb::cascades;
 
@@ -48,22 +49,28 @@ public:
     ApplicationUI(bb::cascades::Application *app);
     virtual ~ApplicationUI() { }
 
-    Q_INVOKABLE void addObject(const QString &link);
+    Q_INVOKABLE void addObject(const QString &name, const QString &link);
 
     Q_INVOKABLE void deleteObject(const QVariantList &indexPath);
 
+    Q_INVOKABLE void alert(const QString &message);
+
+    Q_INVOKABLE void promptName(const QString &message, const QString &link);
+
+public slots:
+    void onPromptFinished(bb::system::SystemUiResult::Type type);
+
 private slots:
     void onSystemLanguageChanged();
+
+
 private:
     void addSavedObject();
-    QString promptName(const QString &message);
-    void alert(const QString &message);
 
     QTranslator* m_pTranslator;
     bb::cascades::LocaleHandler* m_pLocaleHandler;
 
     bb::cascades::GroupDataModel* dataModel() const;
-
     GroupDataModel* m_dataModel;
 };
 
