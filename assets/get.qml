@@ -59,8 +59,7 @@ Page {
                     if (saveButton.text == "Save") {
                         saveButton.text = "Saved!"
                     }
-                    _app.promptName("message", commandtxt.text)
-                    //_app.addObject(commandtxt.text)
+                    _app.promptName("Save this request", commandtxt.text)
                 }
             }
         }

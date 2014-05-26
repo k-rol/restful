@@ -166,8 +166,8 @@ void ApplicationUI::promptName(const QString &message, const QString &link)
 	SystemPrompt *prompt = new SystemPrompt();
 	prompt->setTitle(message);
 	prompt->setDismissAutomatically(true);
-	prompt->inputField()->setEmptyText("Enter name...");
-	prompt->objectName() = link;
+	prompt->inputField()->setEmptyText("Enter a name for your bookmark");
+	prompt->setBody(link);
 
 	bool success = QObject::connect(prompt,
 	         SIGNAL(finished(bb::system::SystemUiResult::Type)),
@@ -176,15 +176,8 @@ void ApplicationUI::promptName(const QString &message, const QString &link)
 
 	if (success) {
 		prompt->show();
-
 	} else {
-        // Failed to connect to signal.
-        // This is not normal in most cases and can be a critical
-        // situation for your app! Make sure you know exactly why
-        // this has happened. Add some code to recover from the lost
-        // connection below this line.
         prompt->deleteLater();
-
     }
 
 
@@ -195,10 +188,12 @@ void ApplicationUI::onPromptFinished(bb::system::SystemUiResult::Type type)
 	if (type == SystemUiResult::ConfirmButtonSelection) {
 
 		SystemPrompt* prompt = qobject_cast<SystemPrompt*>(sender());
-		qDebug() << prompt->inputFieldTextEntry();
-		qDebug() << prompt->objectName();
+		const QString name = prompt->inputFieldTextEntry();
+		const QString link = prompt->body();
+		addObject(name, link);
+
 	} else {
-		qDebug() << "this is some fucked up shit";
+		qDebug() << "Saving Cancelled";
 	}
 }
 
