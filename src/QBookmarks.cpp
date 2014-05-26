@@ -7,10 +7,17 @@
 
 #include "QBookmarks.h"
 #include <QSettings>
+#include
 
-QBookmarks::QBookmarks() {
-	// TODO Auto-generated constructor stub
+QBookmarks::QBookmarks(QObject* parent)
+: QObject(parent) {
 
+}
+
+void QBookmarks::getBookmarks()
+{
+	QSettings settings(this);
+	//settings.setValue()
 }
 
 QString QBookmarks::getSettings(const QString &objectName, const QString &defaultValue) {

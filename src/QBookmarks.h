@@ -10,12 +10,17 @@
 
 #include <QObject>
 
+
+
+
 class QBookmarks: public QObject {
         Q_OBJECT
 
 public:
-        QBookmarks();
+        QBookmarks(QObject* parent = 0);
         virtual ~QBookmarks();
+
+        void getBookmarks();
 
         Q_INVOKABLE
         QString getSettings(const QString &objectName, const QString &defaultValue);
@@ -25,6 +30,9 @@ public:
 
         Q_INVOKABLE
         void syncSettings();
+
+private:
+
 };
 
 #endif
