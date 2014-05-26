@@ -169,6 +169,15 @@ void ApplicationUI::promptName(const QString &message, const QString &link)
 	prompt->inputField()->setEmptyText("Enter a name for your bookmark");
 	prompt->setBody(link);
 
+/*
+	QLineEdit *lineedit = new QLineEdit(link);
+	lineedit->setText(link);
+	QSignalMapper *signalMapper = new QSignalMapper(this);
+	connect(prompt,SIGNAL(finished(bb::system::SystemUiResult::Type)),signalMapper,SLOT(map()));
+	signalMapper->setMapping(lineedit,link);
+	connect(signalMapper,SIGNAL(mapped(const QString &)),this, SIGNAL(onPromptFinished(const QString &,bb::system::SystemUiResult::Type)));
+*/
+
 	bool success = QObject::connect(prompt,
 	         SIGNAL(finished(bb::system::SystemUiResult::Type)),
 	         this,
