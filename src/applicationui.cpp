@@ -177,6 +177,12 @@ void ApplicationUI::deleteObject(const QVariantList &indexPath)
 
 }
 
+void ApplicationUI::useLink(const QVariantList &indexPath)
+{
+	QString link = m_dataModel->data(indexPath).toMap().value("link").value<QString>();
+	emit copyGetLink(link);
+}
+
 //void ApplicationUI::refreshObjects()
 //{
 //    const int objectsReadCount = load();

@@ -42,12 +42,19 @@ Page {
                         
                         }
                     }
+                    ActionItem {
+                        title: "GET"
+                        onTriggered: {
+                            var selectedItem = listview.dataModel.data(listview.selected())
+                            _app.useLink(listview.selected())
+                        }
+                    }
                 }
             ]
         }
         TextField {
             id: textField
-
+            visible: false
         }
     }
     actions: [

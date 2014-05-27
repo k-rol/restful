@@ -57,6 +57,8 @@ public:
 
     Q_INVOKABLE void promptName(const QString &message, const QString &link);
 
+    Q_INVOKABLE void useLink(const QVariantList &indexPath);
+
 private:
     void saveObject();
 
@@ -66,6 +68,8 @@ public slots:
 private slots:
     void onSystemLanguageChanged();
 
+Q_SIGNALS:
+	void copyGetLink(const QString &link);
 
 private:
     void loadDataFromQSettings();
