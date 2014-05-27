@@ -4,10 +4,6 @@
 <context>
     <name>ApplicationUI</name>
     <message>
-        <source>deleted!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>

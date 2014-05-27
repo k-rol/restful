@@ -20,7 +20,7 @@ public:
         QBookmarks(QObject* parent = 0);
         virtual ~QBookmarks();
 
-        void getBookmarks();
+        QList<QVariantMap> getBookmarks();
         void saveBookmarks(const QList<QVariantMap>* maplist);
 
         Q_INVOKABLE

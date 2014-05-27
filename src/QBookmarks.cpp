@@ -9,47 +9,71 @@
 #include <QSettings>
 #include <QList>
 #include <QDebug>
+#include <QMap>
 
 QBookmarks::QBookmarks(QObject* parent)
- {
+	: QObject(parent) {
 
 }
 
-void QBookmarks::getBookmarks()
+QList<QVariantMap> QBookmarks::getBookmarks()
 {
-	qDebug() << "Will it start?";
-	QList<QVariantMap> maplist;
+	QList<QVariantMap> maplist;// = new QList<QVariantMap>;
 	QSettings settings(this);
 	int setSize = settings.beginReadArray("bookmarks");
-	qDebug() << setSize;
+
 	for (int i = 0; i < setSize; ++i) {
 		settings.setArrayIndex(i);
 		qDebug() << "getBookmarks: !!!";
 
 		QVariantMap map;
 
-	    map.insert("name", "mocky ");
-		map.insert("link", "http://www.mocky.io/v2/537fb5da27a1c45703f807b6");
-		//map["string"] = QVariant("bar");
-		//map["bool"] = QVariant(true);
+		QString link = settings.value("bookmarks").toMap().value("link").value<QString>();
+		QString name = settings.value("bookmarks").toMap().value("name").value<QString>();
 
-		//map = settings.value("bookmarks").toString();
+		qDebug() << name;
+		qDebug() << link;
+
+	    map.insert("name", name);
+		map.insert("link", link);
+
+		maplist << map;
+
+		//qDebug() << settings.value("bookmarks");
+		//maplist.append(settings.value("bookmarks"));
+		//qDebug() << maplist.value<QVariantMap>().value("link");
+	    //vmap.insert("name", settings.value("bookmarks"));
+		//vmap.insert("link", settings.value("bookmarks"));
+		//vmap["string"] = QVariant("bar");
+		//vmap["bool"] = QVariant(true);
+
+		//map.insert(settings.value("bookmarks"));
+		//maplist << vmap;
+		//qDebug() << maplist.at(i);
 	}
 	settings.endArray();
+	//qDebug() << maplist.at(0);
+	//qDebug() << maplist.at(1);
+
+	return maplist;
+
 }
 
 void QBookmarks::saveBookmarks(const QList<QVariantMap>* maplist)
 {
 	QSettings settings(this);
+	settings.remove("bookmark");
 	settings.beginWriteArray("bookmarks");
 	for (int i = 0; i < maplist->size(); ++i) {
 		qDebug() << "saveBookmarks:";
+		qDebug() << maplist->size();
 		settings.setArrayIndex(i);
 		qDebug() << maplist->at(i);
 		settings.setValue("bookmarks", maplist->at(i));
 	}
+	//qDebug() << maplist->at(1);
 	settings.endArray();
-	settings.sync();
+	//settings.sync();
 
 }
 

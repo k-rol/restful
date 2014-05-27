@@ -68,7 +68,7 @@ private slots:
 
 
 private:
-    void addSavedObject();
+    void loadDataFromQSettings();
 
     QTranslator* m_pTranslator;
     bb::cascades::LocaleHandler* m_pLocaleHandler;

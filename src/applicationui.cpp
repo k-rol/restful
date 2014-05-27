@@ -55,11 +55,9 @@ ApplicationUI::ApplicationUI(bb::cascades::Application *app) :
 
 
     qml->setContextProperty("_app", this);
-    qDebug() << "addSavedObject";
-    addSavedObject();
-    qDebug() << "saveObject";
-    saveObject();
-    qDebug() << "Above: getObject";
+
+    loadDataFromQSettings();
+
     // Create root object for the UI
     AbstractPane *root = qml->createRootObject<AbstractPane>();
 
@@ -75,8 +73,8 @@ GroupDataModel* ApplicationUI::dataModel() const
 void ApplicationUI::saveObject()
 {
 	QVariantList variantList;
-	GroupDataModel *anotherModel = new GroupDataModel(m_dataModel);
-	anotherModel = m_dataModel;
+//	GroupDataModel *anotherModel = new GroupDataModel(m_dataModel);
+//	anotherModel = m_dataModel;
 
 /*	foreach (QVariantMap item, anotherModel) {
 		variantList.append(item);
@@ -97,11 +95,11 @@ void ApplicationUI::saveObject()
 		<< " Value: " << j.value();
 		}
 	}*/
-	bookmarks->getBookmarks();
+
 
 }
 
-void ApplicationUI::addSavedObject()
+void ApplicationUI::loadDataFromQSettings()
 {
     m_dataModel = new GroupDataModel(this);
     m_dataModel->setSortingKeys(QStringList() << "customerID");
@@ -109,9 +107,16 @@ void ApplicationUI::addSavedObject()
 	m_dataModel->setParent(this);
 	m_dataModel->clear();
 
-	//get stuff from QSettings...
+	QBookmarks *bookmarks = new QBookmarks();
 
-	//then
+
+
+	//maplist = new QList<QVariantMap>(bookmarks->getBookmarks());
+	m_dataModel->insertList(bookmarks->getBookmarks());
+
+	bookmarks->deleteLater();
+
+/*
     QVariantMap map;
     map.insert("name", "mocky ");
 	map.insert("link", "http://www.mocky.io/v2/537fb5da27a1c45703f807b6");
@@ -122,6 +127,8 @@ void ApplicationUI::addSavedObject()
 	map.insert("link", "http://www.mocky.io/v2/537fb5da27a1c45703f807b6");
 
     m_dataModel->insert(map);
+*/
+
 }
 
 void ApplicationUI::addObject(const QString &name, const QString &link)
@@ -132,6 +139,9 @@ void ApplicationUI::addObject(const QString &name, const QString &link)
 	map.insert("link", link);
 
 	m_dataModel->insert(map);
+
+	//Save current list to QSettings in QBookmarks
+	saveObject();
 
 }
 
@@ -154,7 +164,7 @@ void ApplicationUI::deleteObject(const QVariantList &indexPath)
 
 	if (deleted)
 	{
-		alert(tr("deleted!"));
+		saveObject();
 	}
 
 //    const QVariantList deleteIndexPath = m_dataModel->find(map);
