@@ -57,6 +57,9 @@ public:
 
     Q_INVOKABLE void promptName(const QString &message, const QString &link);
 
+private:
+    void saveObject();
+
 public slots:
     void onPromptFinished(bb::system::SystemUiResult::Type type);
 

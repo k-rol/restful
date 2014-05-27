@@ -13,7 +13,7 @@
 
 
 
-class QBookmarks: public QObject {
+class QBookmarks:public QObject {
         Q_OBJECT
 
 public:
@@ -21,6 +21,7 @@ public:
         virtual ~QBookmarks();
 
         void getBookmarks();
+        void saveBookmarks(const QList<QVariantMap>* maplist);
 
         Q_INVOKABLE
         QString getSettings(const QString &objectName, const QString &defaultValue);
@@ -31,7 +32,7 @@ public:
         Q_INVOKABLE
         void syncSettings();
 
-private:
+
 
 };
 

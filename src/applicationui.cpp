@@ -25,6 +25,7 @@
 #include <bb/system/SystemPrompt>
 
 #include <QDebug>
+#include <QBookmarks.h>
 
 //alert
 using namespace bb::system;
@@ -54,8 +55,11 @@ ApplicationUI::ApplicationUI(bb::cascades::Application *app) :
 
 
     qml->setContextProperty("_app", this);
-
+    qDebug() << "addSavedObject";
     addSavedObject();
+    qDebug() << "saveObject";
+    saveObject();
+    qDebug() << "Above: getObject";
     // Create root object for the UI
     AbstractPane *root = qml->createRootObject<AbstractPane>();
 
@@ -66,6 +70,35 @@ ApplicationUI::ApplicationUI(bb::cascades::Application *app) :
 GroupDataModel* ApplicationUI::dataModel() const
 {
     return m_dataModel;
+}
+
+void ApplicationUI::saveObject()
+{
+	QVariantList variantList;
+	GroupDataModel *anotherModel = new GroupDataModel(m_dataModel);
+	anotherModel = m_dataModel;
+
+/*	foreach (QVariantMap item, anotherModel) {
+		variantList.append(item);
+	}*/
+
+	QList<QVariantMap> variantMapList = m_dataModel->toListOfMaps();
+	QBookmarks *bookmarks = new QBookmarks();
+	bookmarks->saveBookmarks(&variantMapList);
+
+
+	/*  To see inside the list of maps
+	for (int i = 0; i < variantMapList.size(); ++i) {
+		QMap<QString, QVariant> myMap = variantMapList[i];
+		QMapIterator<QString, QVariant> j(myMap);
+		while (j.hasNext()) {
+			j.next();
+			qDebug() << "myIndex: " << i << " Key: " << j.key()
+		<< " Value: " << j.value();
+		}
+	}*/
+	bookmarks->getBookmarks();
+
 }
 
 void ApplicationUI::addSavedObject()
