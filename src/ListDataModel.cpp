@@ -118,7 +118,10 @@ void ListDataModel::deleteObject(const QVariantList &indexPath)
 void ListDataModel::useLink(const QVariantList &indexPath)
 {
 	QString link = m_dataModel->data(indexPath).toMap().value("link").value<QString>();
+	qDebug() << link;
 	emit copyGetLink(link);
+	QBookmarks *bookmarks;
+	bookmarks->callsignalGetLink(link);
 }
 
 void ListDataModel::promptName(const QString &message, const QString &link)
@@ -168,6 +171,6 @@ void ListDataModel::onPromptFinished(bb::system::SystemUiResult::Type type)
 
 
 ListDataModel::~ListDataModel() {
-	// TODO Auto-generated destructor stub
+	qDebug() << "!!!! ListDataModel was destroyed !!!!!";
 }
 

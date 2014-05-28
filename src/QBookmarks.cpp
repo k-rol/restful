@@ -16,6 +16,11 @@ QBookmarks::QBookmarks(QObject* parent)
 
 }
 
+void QBookmarks::callsignalGetLink(const QString &link)
+{
+	emit copyGetLink(link);
+}
+
 QList<QVariantMap> QBookmarks::getBookmarks()
 {
 	QList<QVariantMap> maplist;// = new QList<QVariantMap>;

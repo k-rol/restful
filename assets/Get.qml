@@ -10,6 +10,14 @@ Page {
             onGetReceived: {
                 responseAre.text = response
             }
+        },
+        
+        Bookmarks {
+            id: bookmarks
+            onCopyGetLink: {
+                console.debug("FUCK")
+                //commandtxt.text = link
+            }
         }
     ]
     

@@ -1,5 +1,5 @@
 import bb.cascades 1.2
-import QBookmarks 1.0
+
 
 Page {
     titleBar: TitleBar {
