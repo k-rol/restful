@@ -2,11 +2,16 @@ import bb.cascades 1.2
 
 
 Page {
+    attachedObjects: [
+        Get {
+            id: getQml
+            
+        }
+    ]
     titleBar: TitleBar {
         title: "Bookmarks" 
     }
     Container {
-
         ListView {
             id: listview
             dataModel: _app.dataModel

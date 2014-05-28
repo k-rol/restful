@@ -14,11 +14,17 @@
 QBookmarks::QBookmarks(QObject* parent)
 	: QObject(parent) {
 
+	emit copyGetLink("test");
+	qDebug() << "yup, the fuck should be here...";
 }
 
-void QBookmarks::callsignalGetLink(const QString &link)
+void QBookmarks::callsignalGetLink(const QString &linke)
 {
-	emit copyGetLink(link);
+	qDebug() << "QBookmarks callsignalGetLink";
+	qDebug() << linke;
+	this->deleteLater();
+	emit copyGetLink("hyg");
+	qDebug() << "emit copyGetLink(hyg);";
 }
 
 QList<QVariantMap> QBookmarks::getBookmarks()
@@ -59,7 +65,7 @@ QList<QVariantMap> QBookmarks::getBookmarks()
 	settings.endArray();
 	//qDebug() << maplist.at(0);
 	//qDebug() << maplist.at(1);
-
+	deleteLater();
 	return maplist;
 
 }
@@ -79,6 +85,7 @@ void QBookmarks::saveBookmarks(const QList<QVariantMap>* maplist)
 	//qDebug() << maplist->at(1);
 	settings.endArray();
 	//settings.sync();
+	deleteLater();
 
 }
 
@@ -107,6 +114,6 @@ void QBookmarks::syncSettings()
 }
 
 QBookmarks::~QBookmarks() {
-	// TODO Auto-generated destructor stub
+	qDebug() << "QBookmark destroyed";
 }
 

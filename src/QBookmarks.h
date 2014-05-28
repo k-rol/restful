@@ -23,7 +23,7 @@ public:
         QList<QVariantMap> getBookmarks();
         void saveBookmarks(const QList<QVariantMap>* maplist);
 
-        void callsignalGetLink(const QString &link);
+        void callsignalGetLink(const QString &linke);
 
         Q_INVOKABLE
         QString getSettings(const QString &objectName, const QString &defaultValue);
@@ -35,7 +35,7 @@ public:
         void syncSettings();
 
 Q_SIGNALS:
-	void copyGetLink(const QString &link);
+	void copyGetLink(const QString &linke);
 
 };
 

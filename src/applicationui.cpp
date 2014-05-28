@@ -25,7 +25,6 @@
 #include <QBookmarks.h>
 #include <ListDataModel.h>
 
-//alert
 
 using namespace bb::cascades;
 

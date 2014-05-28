@@ -6,10 +6,18 @@
  */
 
 #include "PostRequests.h"
+#include <QDebug>
 
-PostRequests::PostRequests() {
-	// TODO Auto-generated constructor stub
+PostRequests::PostRequests(QObject* parent)
+	: QObject(parent) {
 
+
+}
+
+void PostRequests::tryIt()
+{
+	emit signalToQml("Signal postrequests RECEIVED!");
+	qDebug() << "Should be above...";
 }
 
 PostRequests::~PostRequests() {

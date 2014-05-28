@@ -9,6 +9,7 @@
 #include <bb/system/SystemPrompt>
 #include <QDebug>
 #include <QBookmarks.h>
+#include <PostRequests.h>
 
 using namespace bb::system;
 using namespace bb::cascades;
@@ -117,11 +118,14 @@ void ListDataModel::deleteObject(const QVariantList &indexPath)
 
 void ListDataModel::useLink(const QVariantList &indexPath)
 {
-	QString link = m_dataModel->data(indexPath).toMap().value("link").value<QString>();
-	qDebug() << link;
-	emit copyGetLink(link);
-	QBookmarks *bookmarks;
-	bookmarks->callsignalGetLink(link);
+//	QString linke = m_dataModel->data(indexPath).toMap().value("link").value<QString>();
+//	qDebug() << linke;
+//	QBookmarks *bookmarks = new QBookmarks();
+//	qDebug() << "From ListDataModel calling signal from QBookmarks";
+//	//emit copyGetLink("LISTDATAMODEL");
+//	bookmarks->callsignalGetLink(linke);
+	PostRequests *postRequests = new PostRequests;
+	postRequests->tryIt();
 }
 
 void ListDataModel::promptName(const QString &message, const QString &link)
