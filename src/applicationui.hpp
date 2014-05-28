@@ -18,10 +18,6 @@
 #define ApplicationUI_HPP_
 
 #include <QObject>
-#include <bb/cascades/GroupDataModel>
-#include <bb/system/SystemPrompt>
-
-using namespace bb::cascades;
 
 namespace bb
 {
@@ -43,42 +39,17 @@ class QTranslator;
 class ApplicationUI : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(bb::cascades::DataModel* dataModel READ dataModel CONSTANT)
 
 public:
     ApplicationUI(bb::cascades::Application *app);
     virtual ~ApplicationUI() { }
 
-    Q_INVOKABLE void addObject(const QString &name, const QString &link);
-
-    Q_INVOKABLE void deleteObject(const QVariantList &indexPath);
-
-    Q_INVOKABLE void alert(const QString &message);
-
-    Q_INVOKABLE void promptName(const QString &message, const QString &link);
-
-    Q_INVOKABLE void useLink(const QVariantList &indexPath);
-
-private:
-    void saveObject();
-
-public slots:
-    void onPromptFinished(bb::system::SystemUiResult::Type type);
-
 private slots:
     void onSystemLanguageChanged();
 
-Q_SIGNALS:
-	void copyGetLink(const QString &link);
-
 private:
-    void loadDataFromQSettings();
-
     QTranslator* m_pTranslator;
     bb::cascades::LocaleHandler* m_pLocaleHandler;
-
-    bb::cascades::GroupDataModel* dataModel() const;
-    GroupDataModel* m_dataModel;
 };
 
 #endif /* ApplicationUI_HPP_ */

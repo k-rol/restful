@@ -24,6 +24,7 @@
 
 #include <GetRequests.h>
 #include <QBookmarks.h>
+#include <ListDataModel.h>
 
 using namespace bb::cascades;
 
@@ -36,6 +37,7 @@ Q_DECL_EXPORT int main(int argc, char **argv)
 
     qmlRegisterType<GetRequests>("GetRequest", 1, 0, "Get");
     qmlRegisterType<QBookmarks>("QBookmarks", 1, 0, "Bookmarks");
+    //qmlRegisterType<ListDataModel>("ListDataModel", 1, 0, "ListDataModel");
     // Create the Application UI object, this is where the main.qml file
     // is loaded and the application scene is set.
     new ApplicationUI(&app);

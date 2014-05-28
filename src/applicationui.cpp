@@ -21,14 +21,11 @@
 #include <bb/cascades/AbstractPane>
 #include <bb/cascades/LocaleHandler>
 
-#include <bb/system/SystemDialog>
-#include <bb/system/SystemPrompt>
-
 #include <QDebug>
 #include <QBookmarks.h>
+#include <ListDataModel.h>
 
 //alert
-using namespace bb::system;
 
 using namespace bb::cascades;
 
@@ -53,206 +50,17 @@ ApplicationUI::ApplicationUI(bb::cascades::Application *app) :
     // to ensure the document gets destroyed properly at shut down.
     QmlDocument *qml = QmlDocument::create("asset:///main.qml").parent(this);
 
-
-    qml->setContextProperty("_app", this);
-
-    loadDataFromQSettings();
+    //Set context for ListDataModel
+    ListDataModel *listDataModel = new ListDataModel(this);
+    qml->setContextProperty("_app", listDataModel);
+    //Load the list of bookmarks
+    listDataModel->loadDataFromQSettings();
 
     // Create root object for the UI
     AbstractPane *root = qml->createRootObject<AbstractPane>();
 
     // Set created root object as the application scene
     app->setScene(root);
-}
-
-GroupDataModel* ApplicationUI::dataModel() const
-{
-    return m_dataModel;
-}
-
-void ApplicationUI::saveObject()
-{
-	QVariantList variantList;
-//	GroupDataModel *anotherModel = new GroupDataModel(m_dataModel);
-//	anotherModel = m_dataModel;
-
-/*	foreach (QVariantMap item, anotherModel) {
-		variantList.append(item);
-	}*/
-
-	QList<QVariantMap> variantMapList = m_dataModel->toListOfMaps();
-	QBookmarks *bookmarks = new QBookmarks();
-	bookmarks->saveBookmarks(&variantMapList);
-
-
-	/*  To see inside the list of maps
-	for (int i = 0; i < variantMapList.size(); ++i) {
-		QMap<QString, QVariant> myMap = variantMapList[i];
-		QMapIterator<QString, QVariant> j(myMap);
-		while (j.hasNext()) {
-			j.next();
-			qDebug() << "myIndex: " << i << " Key: " << j.key()
-		<< " Value: " << j.value();
-		}
-	}*/
-
-
-}
-
-void ApplicationUI::loadDataFromQSettings()
-{
-    m_dataModel = new GroupDataModel(this);
-    m_dataModel->setSortingKeys(QStringList() << "customerID");
-    m_dataModel->setGrouping(ItemGrouping::None);
-	m_dataModel->setParent(this);
-	m_dataModel->clear();
-
-	QBookmarks *bookmarks = new QBookmarks();
-
-
-
-	//maplist = new QList<QVariantMap>(bookmarks->getBookmarks());
-	m_dataModel->insertList(bookmarks->getBookmarks());
-
-	bookmarks->deleteLater();
-
-/*
-    QVariantMap map;
-    map.insert("name", "mocky ");
-	map.insert("link", "http://www.mocky.io/v2/537fb5da27a1c45703f807b6");
-
-	m_dataModel->insert(map);
-
-    map.insert("name", "mocky2");
-	map.insert("link", "http://www.mocky.io/v2/537fb5da27a1c45703f807b6");
-
-    m_dataModel->insert(map);
-*/
-
-}
-
-void ApplicationUI::addObject(const QString &name, const QString &link)
-{
-
-    QVariantMap map;
-    map.insert("name", name);
-	map.insert("link", link);
-
-	m_dataModel->insert(map);
-
-	//Save current list to QSettings in QBookmarks
-	saveObject();
-
-}
-
-void ApplicationUI::deleteObject(const QVariantList &indexPath)
-{
-    bool deleted = false;
-//    bool saved = false;
-//
-//    if (!validateID(customerID))
-//        return false;
-//
-//    // Create a person object with the required id.
-//    // The name can be left out because find() will use the == operator
-//    // defined in the Person class. See Person.cpp
-//    Person *person = new Person(customerID, QString(), QString());
-//
-	qDebug() << "indexpath:";
-	qDebug() << indexPath;
-	deleted = m_dataModel->removeAt(indexPath);
-
-	if (deleted)
-	{
-		saveObject();
-	}
-
-//    const QVariantList deleteIndexPath = m_dataModel->find(map);
-
-//    if (deleteIndexPath.isEmpty()) {
-//        alert(tr("Object ID not found."));
-//    } else {
-//        deleted = m_dataModel->removeAt(deleteIndexPath);
-//    }
-
-}
-
-void ApplicationUI::useLink(const QVariantList &indexPath)
-{
-	QString link = m_dataModel->data(indexPath).toMap().value("link").value<QString>();
-	emit copyGetLink(link);
-}
-
-//void ApplicationUI::refreshObjects()
-//{
-//    const int objectsReadCount = load();
-//
-//    if (objectsReadCount == 0) {
-//        alert(tr("The customer list is empty."));
-//    } else {
-//        alert(tr("%1 objects loaded.").arg(objectsReadCount));
-//    }
-//}
-
-void ApplicationUI::alert(const QString &message)
-{
-    qDebug() << "alert: " << message;
-    SystemDialog *dialog; // SystemDialog uses the BB10 native dialog.
-    dialog = new SystemDialog(tr("OK"), 0); // New dialog with on 'Ok' button, no 'Cancel' button
-    dialog->setTitle(tr("Alert")); // set a title for the message
-    dialog->setBody(message); // set the message itself
-    dialog->setDismissAutomatically(true); // Hides the dialog when a button is pressed.
-
-    // Setup slot to mark the dialog for deletion in the next event loop after the dialog has been accepted.
-    bool ok = connect(dialog, SIGNAL(finished(bb::system::SystemUiResult::Type)), dialog, SLOT(deleteLater()));
-    Q_ASSERT(ok);
-    Q_UNUSED(ok);
-    dialog->show();
-}
-
-void ApplicationUI::promptName(const QString &message, const QString &link)
-{
-	SystemPrompt *prompt = new SystemPrompt();
-	prompt->setTitle(message);
-	prompt->setDismissAutomatically(true);
-	prompt->inputField()->setEmptyText("Enter a name for your bookmark");
-	prompt->setBody(link);
-
-/*
-	QLineEdit *lineedit = new QLineEdit(link);
-	lineedit->setText(link);
-	QSignalMapper *signalMapper = new QSignalMapper(this);
-	connect(prompt,SIGNAL(finished(bb::system::SystemUiResult::Type)),signalMapper,SLOT(map()));
-	signalMapper->setMapping(lineedit,link);
-	connect(signalMapper,SIGNAL(mapped(const QString &)),this, SIGNAL(onPromptFinished(const QString &,bb::system::SystemUiResult::Type)));
-*/
-
-	bool success = QObject::connect(prompt,
-	         SIGNAL(finished(bb::system::SystemUiResult::Type)),
-	         this,
-	         SLOT(onPromptFinished(bb::system::SystemUiResult::Type)));
-
-	if (success) {
-		prompt->show();
-	} else {
-        prompt->deleteLater();
-    }
-
-
-}
-
-void ApplicationUI::onPromptFinished(bb::system::SystemUiResult::Type type)
-{
-	if (type == SystemUiResult::ConfirmButtonSelection) {
-
-		SystemPrompt* prompt = qobject_cast<SystemPrompt*>(sender());
-		const QString name = prompt->inputFieldTextEntry();
-		const QString link = prompt->body();
-		addObject(name, link);
-
-	} else {
-		qDebug() << "Saving Cancelled";
-	}
 }
 
 void ApplicationUI::onSystemLanguageChanged()
