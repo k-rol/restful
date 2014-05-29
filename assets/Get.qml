@@ -2,6 +2,7 @@ import bb.cascades 1.2
 import GetRequest 1.0
 import QBookmarks 1.0
 import PostRequests 1.0
+import ListDataModel 1.0
 
 Page {    
     titleBar: TitleBar {
@@ -26,6 +27,14 @@ Page {
                 onSignalToQml: {
                     console.debug("IT CAME AROUND HERE!")
                 }
+            },
+            ListDataModel {
+                onCopyGetLink: {
+                    console.debug("YOU ARE A FART FACE")
+                }
+            },
+            Bookmarks {
+                id: sbookmark
             }
         ]
         TextField {
@@ -37,6 +46,7 @@ Page {
             }
         
         }
+        
         
         Container {
             layout: StackLayout {
@@ -75,7 +85,7 @@ Page {
             Button {
                 text: "signal"
                 onClicked: {
-                    //postrequests.tryIt()
+                    postrequests.tryIt()
                 }
             }
         }

@@ -27,8 +27,6 @@ public:
 
     Q_INVOKABLE void promptName(const QString &message, const QString &link);
 
-    Q_INVOKABLE void useLink(const QVariantList &indexPath);
-
     virtual ~ListDataModel();
 
 private:
@@ -37,6 +35,7 @@ private:
 public slots:
     void onPromptFinished(bb::system::SystemUiResult::Type type);
     void loadDataFromQSettings();
+    void useLink(const QVariantList &indexPath);
 
 Q_SIGNALS:
 	void copyGetLink(const QString &link);

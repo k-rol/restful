@@ -1,18 +1,29 @@
 import bb.cascades 1.2
-
+import ListDataModel 1.0
+import PostRequests 1.0
 
 Page {
+    
     attachedObjects: [
         Get {
             id: getQml
             
+        },
+        ListDataModel {
+            id: listDataModel
+            
+        },
+        PostRequests {
+            id: postrequests
         }
     ]
     titleBar: TitleBar {
         title: "Bookmarks" 
     }
+
     Container {
-        ListView {
+
+            ListView {
             id: listview
             dataModel: _app.dataModel
             listItemComponents: [
@@ -51,15 +62,19 @@ Page {
                         title: "GET"
                         onTriggered: {
                             var selectedItem = listview.dataModel.data(listview.selected())
-                            _app.useLink(listview.selected())
+                            //_app.useLink(listview.selected())
+                            //listDataModel.useLink(listview.selected())
+                            postrequests.tryIt()
                         }
                     }
                 }
             ]
         }
+        
         TextField {
             id: textField
-            visible: false
+            text: "test"
+            visible: true
         }
     }
     actions: [

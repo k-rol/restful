@@ -118,14 +118,13 @@ void ListDataModel::deleteObject(const QVariantList &indexPath)
 
 void ListDataModel::useLink(const QVariantList &indexPath)
 {
-//	QString linke = m_dataModel->data(indexPath).toMap().value("link").value<QString>();
-//	qDebug() << linke;
-//	QBookmarks *bookmarks = new QBookmarks();
-//	qDebug() << "From ListDataModel calling signal from QBookmarks";
-//	//emit copyGetLink("LISTDATAMODEL");
-//	bookmarks->callsignalGetLink(linke);
-	PostRequests *postRequests = new PostRequests;
-	postRequests->tryIt();
+	QString linke = m_dataModel->data(indexPath).toMap().value("link").value<QString>();
+	qDebug() << linke;
+	//QBookmarks *bookmarks = new QBookmarks();
+	qDebug() << "From ListDataModel calling signal from QBookmarks";
+	emit copyGetLink("LISTDATAMODEL");
+	//bookmarks->callsignalGetLink(linke);
+
 }
 
 void ListDataModel::promptName(const QString &message, const QString &link)
