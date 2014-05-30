@@ -15,17 +15,6 @@ Page {
                 onGetReceived: {
                     responseAre.text = response
                 }
-            },
-            QBookmarks {
-                onCopyGetLink: {
-                    console.debug("!!!!! FUCK  !!!!!")
-                }
-            },
-            PostRequests {
-                id: postrequests
-                onSignalToQml: {
-                    console.debug("IT CAME AROUND HERE!")
-                }
             }
         ]
         TextField {
