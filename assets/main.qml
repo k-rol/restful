@@ -20,7 +20,9 @@ import QBookmarks 1.0
 TabbedPane {
     id: tabbedPane
     property string getcommand
+    property string gettitlebar
     getcommand: "http://"
+    gettitlebar: "fuck"
     Tab {
         id: getTab
         title: "GET"

@@ -48,6 +48,7 @@ Page {
                             //_app.useLink(listview.selected())
                             //listDataModel.useLink(listview.selected())
                             tabbedPane.getcommand = selectedItem.link
+                            //tabbedPane.gettitlebar = selectedItem.name
                             tabbedPane.activeTab = getTab
                         }
                     }

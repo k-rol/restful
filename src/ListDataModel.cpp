@@ -116,8 +116,10 @@ void ListDataModel::deleteObject(const QVariantList &indexPath)
 
 }
 
+//Decomissioned and not useful for now
 void ListDataModel::useLink(const QVariantList &indexPath)
 {
+
 	qDebug() << "Trying useLink";
 	loadDataFromQSettings();
 	QString linke = m_dataModel->data(indexPath).toMap().value("link").value<QString>();

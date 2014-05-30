@@ -4,8 +4,10 @@ import QBookmarks 1.0
 import PostRequests 1.0
 
 Page {    
+property string previewtext
     titleBar: TitleBar {
-        title: "Get"
+        id: titelBar
+        title: tabbedPane.gettitlebar
         } 
     Container {
         attachedObjects: [
@@ -21,10 +23,19 @@ Page {
             id: commandtxt
             text: tabbedPane.getcommand //"http://www.mocky.io/v2/537d6220386c77eb08e97e1d"
             hintText: "Enter GET string"
+            
             onTextChanged: {
+                
                 saveButton.text = "Save"
+                //console.debug(tabbedPane.activeTab != bookmarksTab);
+                //titelBar.title = "GETe"
+                //if (tabbedPane.activeTab != bookmarksTab){
+                //    titelBar.title = "GETe"
+                //}
+                
             }
-        
+            
+
         }
         
         Container {
@@ -49,6 +60,7 @@ Page {
                 onClicked: {
                     commandtxt.text = "http://"
                     commandtxt.requestFocus()
+                    titelBar.title = "GET"
                 }
             }
             Button {
@@ -59,12 +71,6 @@ Page {
                         saveButton.text = "Saved!"
                     }
                     _app.promptName("Save this request", commandtxt.text)
-                }
-            }
-            Button {
-                text: "signal"
-                onClicked: {
-                    //postrequests.tryIt()
                 }
             }
         }
@@ -88,6 +94,9 @@ Page {
             }
             Button {
                 text: "Preview"
+                onClicked: {
+                 
+                }
             }
         }
         TextArea {
