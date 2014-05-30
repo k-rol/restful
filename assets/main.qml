@@ -18,6 +18,9 @@ import bb.cascades 1.2
 import QBookmarks 1.0
 
 TabbedPane {
+    id: tabbedPane
+    property string getcommand
+    getcommand: "http://"
     Tab {
         id: getTab
         title: "GET"

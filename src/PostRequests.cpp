@@ -17,7 +17,7 @@ PostRequests::PostRequests(QObject* parent)
 void PostRequests::tryIt()
 {
 	emit signalToQml("Signal postrequests RECEIVED!");
-	qDebug() << "Should be above...";
+	qDebug() << "Postrequests signaltoqml emitted";
 }
 
 PostRequests::~PostRequests() {

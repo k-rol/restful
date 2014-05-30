@@ -30,7 +30,7 @@ Page {
         ]
         TextField {
             id: commandtxt
-            text: "http://www.mocky.io/v2/537d6220386c77eb08e97e1d"
+            text: tabbedPane.getcommand //"http://www.mocky.io/v2/537d6220386c77eb08e97e1d"
             hintText: "Enter GET string"
             onTextChanged: {
                 saveButton.text = "Save"

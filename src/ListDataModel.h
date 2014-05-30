@@ -39,7 +39,7 @@ public slots:
     void loadDataFromQSettings();
 
 Q_SIGNALS:
-	void copyGetLink(const QString &link);
+	void copyGetLink(const QString &linke);
 
 private:
     bb::cascades::GroupDataModel* dataModel() const;

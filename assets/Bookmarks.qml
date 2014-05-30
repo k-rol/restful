@@ -1,13 +1,7 @@
 import bb.cascades 1.2
-
+import PostRequests 1.0
 
 Page {
-    attachedObjects: [
-        Get {
-            id: getQml
-            
-        }
-    ]
     titleBar: TitleBar {
         title: "Bookmarks" 
     }
@@ -51,7 +45,10 @@ Page {
                         title: "GET"
                         onTriggered: {
                             var selectedItem = listview.dataModel.data(listview.selected())
-                            _app.useLink(listview.selected())
+                            //_app.useLink(listview.selected())
+                            //listDataModel.useLink(listview.selected())
+                            tabbedPane.getcommand = selectedItem.link
+                            tabbedPane.activeTab = getTab
                         }
                     }
                 }
