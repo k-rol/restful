@@ -1,7 +1,15 @@
 import bb.cascades 1.2
 import PostRequests 1.0
+import bb.system 1.2
 
 Page {
+    attachedObjects: [
+        SystemToast {
+            id: notif
+            body: "Text Copied!"
+            
+        }
+    ]
     titleBar: TitleBar {
         title: "Bookmarks" 
     }
@@ -42,7 +50,8 @@ Page {
                         }
                     }
                     ActionItem {
-                        title: "GET"
+                        title: "Copy"
+                        imageSource: "asset:///images/ic_copy.png"
                         onTriggered: {
                             var selectedItem = listview.dataModel.data(listview.selected())
                             //_app.useLink(listview.selected())
@@ -50,6 +59,7 @@ Page {
                             tabbedPane.getcommand = selectedItem.link
                             //tabbedPane.gettitlebar = selectedItem.name
                             tabbedPane.activeTab = getTab
+                            notif.show()
                         }
                     }
                 }
@@ -60,16 +70,4 @@ Page {
             visible: false
         }
     }
-    actions: [
-        ActionItem {
-            title: "Delete"
-            onTriggered: {
-                //groupData.remove({
-                //        number: "L",
-                //        link: "description"
-                //})
-            }
-        }
-    ]
-    
 }

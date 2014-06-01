@@ -22,10 +22,12 @@ TabbedPane {
     property string getcommand
     property string gettitlebar
     getcommand: "http://"
-    gettitlebar: "fuck"
+    gettitlebar: "GET"
+    showTabsOnActionBar: true
     Tab {
         id: getTab
-        title: "GET"
+        title: "REST"
+        imageSource: "asset:///images/rest.png"
         delegate: Delegate {
             id: delegateGet
             source: "asset:///Get.qml"
@@ -34,19 +36,10 @@ TabbedPane {
         delegateActivationPolicy: TabDelegateActivationPolicy.ActivateImmediately
 
     }
-    Tab {
-        id: postTab
-        title: "POST"
-        delegate: Delegate {
-            id: delegatePost
-         //   source: "asset:///Post.qml"
-        }
-        delegateActivationPolicy: TabDelegateActivationPolicy.ActivateImmediately
-    }
-    
     
     Tab {
         id: bookmarksTab
+        imageSource: "asset:///images/bookmarks.png"
         title: "Bookmarks"
         delegate: Delegate {
             id: delegateBookmarks

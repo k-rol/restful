@@ -19,6 +19,22 @@ property string previewtext
                 }
             }
         ]
+        DropDown {
+            id: dropdownservice
+            title: "REST Service"
+            onSelectedIndexChanged: {
+                console.log("SelectedIndex was changed to " + selectedIndex);
+            }
+            Option {
+                text: "GET"
+                description: "Send a GET request"
+                selected: true
+            }
+            Option {
+                text: "POST"
+                description: "Send a POST request"
+            }
+        }
         TextField {
             id: commandtxt
             text: tabbedPane.getcommand //"http://www.mocky.io/v2/537d6220386c77eb08e97e1d"
