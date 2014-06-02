@@ -13,6 +13,7 @@
 #include <QUrl>
 #include <QTimer>
 #include <bb/data/JsonDataAccess>
+#include <QNetworkCookie>
 
 GetRequests::GetRequests(QObject* parent)
 	: QObject(parent)
@@ -41,7 +42,20 @@ void GetRequests::onGetReply()
 			if(available > 0) {
 				const QByteArray buffer(reply->readAll());
 				response = buffer;
-
+//				QVariant header = reply->header(QNetworkRequest::CookieHeader);
+//				if (header.isValid()) {
+//					QList<QNetworkCookie> cookies = header.value<QList<QNetworkCookie> >();
+//					foreach (QNetworkCookie cookie, cookies) {
+//					qDebug() << "Header:";
+//					qDebug() << cookie;
+//						}
+//				    QList<QNetworkCookie> cookies = header.value<QList<QNetworkCookie> >();
+//				    foreach (QNetworkCookie cookie, cookies) {
+//				    	qDebug() << "Header:";
+//				    	qDebug() << cookie;
+//				    }
+//				}
+				//QByteArray headerraw = reply->rawHeader(QNetworkRequest::);
 
 
 			}

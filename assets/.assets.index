@@ -1,8 +1,10 @@
 1
-6
+8
 Bookmarks.qml
 Get.qml
+Head.qml
 images/bookmarks.png
 images/ic_copy.png
 images/rest.png
 main.qml
+Preview.qml
