@@ -42,22 +42,12 @@ void GetRequests::onGetReply()
 			if(available > 0) {
 				const QByteArray buffer(reply->readAll());
 				response = buffer;
-//				QVariant header = reply->header(QNetworkRequest::CookieHeader);
-//				if (header.isValid()) {
-//					QList<QNetworkCookie> cookies = header.value<QList<QNetworkCookie> >();
-//					foreach (QNetworkCookie cookie, cookies) {
-//					qDebug() << "Header:";
-//					qDebug() << cookie;
-//						}
-//				    QList<QNetworkCookie> cookies = header.value<QList<QNetworkCookie> >();
-//				    foreach (QNetworkCookie cookie, cookies) {
-//				    	qDebug() << "Header:";
-//				    	qDebug() << cookie;
-//				    }
-//				}
-				//QByteArray headerraw = reply->rawHeader(QNetworkRequest::);
 
-
+				//reads header
+				QList<QByteArray> headerList = reply->rawHeaderList();
+				foreach(QByteArray head, headerList) {
+					qDebug() << head << ":\t" << reply->rawHeader(head);
+				}
 			}
 
 		} else {
