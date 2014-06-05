@@ -5,85 +5,29 @@ Page {
         Header {
             title: "Full Header of QNetworkRequest::"
         }
-        Container {
-            layout: StackLayout {
-                orientation: LayoutOrientation.LeftToRight
+//        Container {
+//            layout: StackLayout {
+//                orientation: LayoutOrientation.LeftToRight
+//
+//            }
+//            Label {
+//                text: "HttpStatusCodeAttribute:"
+//           } 
+//           Label {
+//               text: "204"
+//           }
+//           
+//        }
+//        Divider {
+//            
+//        }
+        
+        TextArea {
+            text: getNavPane.headertext
+            preferredWidth: 766.0
+            preferredHeight: 1139
+            editable: false
+        }
 
-            }
-            Label {
-                text: "HttpStatusCodeAttribute:"
-           } 
-           Label {
-               text: "204"
-           }
-           
-        }
-        Divider {
-            
-        }
-        Container {
-            layout: StackLayout {
-                orientation: LayoutOrientation.LeftToRight
-            
-            }
-            Label {
-                text: "HttpReasonPhraseAttribute:"
-            } 
-            Label {
-                text: "204"
-            }
-        
-        }
-        Divider {
-        
-        }
-        Container {
-            layout: StackLayout {
-                orientation: LayoutOrientation.LeftToRight
-            
-            }
-            Label {
-                text: "ConnectionEncryptedAttribute:"
-            } 
-            Label {
-                text: "204"
-            }
-        
-        }
-        Divider {
-        
-        }
-        Container {
-            layout: StackLayout {
-                orientation: LayoutOrientation.LeftToRight
-            
-            }
-            Label {
-                text: "Status Code:"
-            } 
-            Label {
-                text: "204"
-            }
-        
-        }
-        Divider {
-        
-        }
-        Container {
-            layout: StackLayout {
-                orientation: LayoutOrientation.LeftToRight
-            
-            }
-            Label {
-                text: "Status Code:"
-            } 
-            Label {
-                text: "204"
-            }
-        
-        }
-        Divider {
-        
-        }
     }
 }

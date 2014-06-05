@@ -6,6 +6,9 @@ import PostRequests 1.0
 NavigationPane {
     id: getNavPane
     property string previewtext
+    property string headertext
+    property string statuscode
+    property string length
     Page {    
 
         titleBar: TitleBar {
@@ -19,6 +22,11 @@ NavigationPane {
                     
                     onGetReceived: {
                         responseArea.text = response
+                        headertext = toSendRawHeader
+                        statuscode = toSendhttpStatusCode
+                        length = toSendContentLength
+                        labelStatusCode.visible = true
+                        labelLength.visible = true
                     }
                 }
             ]
@@ -130,7 +138,8 @@ NavigationPane {
                 Button {
                     text: "Head"
                     onClicked: {
-                        
+                        var headNavPane = headerDefinition.createObject()
+                        getNavPane.push(headNavPane)
                     }
                 }
                 Button {
@@ -140,6 +149,26 @@ NavigationPane {
                     	var previewNavPane = previewDefinition.createObject()
                     	getNavPane.push(previewNavPane)
                     }
+                }
+            }
+            Container {
+                layout: StackLayout {
+                    orientation: LayoutOrientation.LeftToRight
+
+                }
+                horizontalAlignment: HorizontalAlignment.Center
+                Label {
+                    id: labelStatusCode
+                    text: "Status code: " + statuscode
+                    visible: false
+                }
+                Label {
+                    text: "\t"
+                }
+                Label {
+                    id: labelLength
+                    text: "Length: " + length
+                    visible: false
                 }
             }
             
@@ -165,6 +194,10 @@ NavigationPane {
             ComponentDefinition {
                 id: previewDefinition
                 source: "Preview.qml"
+            },
+            ComponentDefinition {
+                id: headerDefinition
+                source: "Head.qml"
             }
         ]
     }//Page

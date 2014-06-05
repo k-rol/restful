@@ -35,6 +35,9 @@ void GetRequests::onGetReply()
 {
 	QNetworkReply* reply = qobject_cast<QNetworkReply*>(sender());
 	QString response;
+	QString toSendRawHeader;
+	QString toSendContentLength;
+	QString toSendhttpStatusCode;
 
 	if(reply) {
 		if (reply->error() == QNetworkReply::NoError) {
@@ -43,11 +46,33 @@ void GetRequests::onGetReply()
 				const QByteArray buffer(reply->readAll());
 				response = buffer;
 
-				//reads header
+				//reads rawheader
 				QList<QByteArray> headerList = reply->rawHeaderList();
 				foreach(QByteArray head, headerList) {
-					qDebug() << head << ":\t" << reply->rawHeader(head);
+					//qDebug() << head << ":\t" << reply->rawHeader(head);
+					QString stringHead(head);
+					QString stringRawHead( reply->rawHeader(head));
+					toSendRawHeader += QString("\n\r %1 : %2").arg(stringHead, stringRawHead);
 				}
+				qDebug() << toSendRawHeader;
+
+				//reads knownheader
+				//QNetworkRequest::KnownHeaders knownheader = QNetworkRequest::ContentLengthHeader;
+				QVariant contentType = reply->header(QNetworkRequest::ContentTypeHeader);
+				QVariant contentLength = reply->header(QNetworkRequest::ContentLengthHeader);
+				QVariant httpStatusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute);
+
+				qDebug() << "KNOWN HEADER";
+				//qDebug() << contentType.value<QString>();
+				//qDebug() << contentLength.value<QString>();
+				//qDebug() << httpStatusCode.value<QString>();
+
+				toSendContentLength = contentLength.value<QString>();
+				toSendhttpStatusCode = httpStatusCode.value<QString>();
+
+				qDebug() << toSendContentLength;
+				qDebug() << toSendhttpStatusCode;
+
 			}
 
 		} else {
@@ -59,7 +84,7 @@ void GetRequests::onGetReply()
 	}
 
 
-    emit getReceived(response);
+    emit getReceived(response, toSendRawHeader, toSendhttpStatusCode, toSendContentLength);
 }
 
 
