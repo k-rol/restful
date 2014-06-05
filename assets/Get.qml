@@ -5,7 +5,8 @@ import PostRequests 1.0
 
 NavigationPane {
     id: getNavPane
-    property string previewtext
+    property alias webviewGet: webviewshare
+    property variant previewtext
     property string headertext
     property string statuscode
     property string length
@@ -21,12 +22,16 @@ NavigationPane {
                     id: get
                     
                     onGetReceived: {
-                        responseArea.text = response
+                        //responseArea.text = response
+                        webviewshare.html = response
+                        responseArea.text = webviewshare.html
+                        //testwebview.html = response
                         headertext = toSendRawHeader
                         statuscode = toSendhttpStatusCode
                         length = toSendContentLength
                         labelStatusCode.visible = true
                         labelLength.visible = true
+                        console.debug(response)
                     }
                 }
             ]
@@ -145,7 +150,7 @@ NavigationPane {
                 Button {
                     text: "Body"
                     onClicked: {
-                        previewtext = responseArea.text
+                        //previewtext = responseArea.text
                     	var previewNavPane = previewDefinition.createObject()
                     	getNavPane.push(previewNavPane)
                     }
@@ -171,7 +176,7 @@ NavigationPane {
                     visible: false
                 }
             }
-            
+
             TextArea {
                 id: responseArea
                 hintText: "Get Response will be here"
@@ -183,8 +188,7 @@ NavigationPane {
                 textFormat: TextFormat.Html
                 editable: false
                 scrollMode: TextAreaScrollMode.Elastic
-
-            
+                           
             }
         
         
@@ -198,6 +202,10 @@ NavigationPane {
             ComponentDefinition {
                 id: headerDefinition
                 source: "Head.qml"
+            },
+            WebView {
+                id: webviewshare
+                
             }
         ]
     }//Page

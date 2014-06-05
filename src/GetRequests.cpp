@@ -83,7 +83,7 @@ void GetRequests::onGetReply()
 		reply->deleteLater();
 	}
 
-
+	//qDebug() << response;
     emit getReceived(response, toSendRawHeader, toSendhttpStatusCode, toSendContentLength);
 }
 

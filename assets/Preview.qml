@@ -4,7 +4,7 @@ Page {
     Container {
         TextArea {
             id: textArea
-            text: getNavPane.previewtext
+            text: getNavPane.webviewGet.html
             preferredWidth: 766.0
             preferredHeight: 1139
             editable: false
@@ -17,6 +17,8 @@ Page {
             preferredWidth: 766.0
             preferredHeight: 1139
             visible: false
+            settings.defaultTextCodecName: "UTF-16"
+
         }
 
     }
@@ -47,7 +49,7 @@ Page {
                 if (textArea.visible == true) {
                     textArea.visible = false ;
                     webView.visible = true ;
-                    webView.html = getNavPane.previewtext ;
+                    webView.html = getNavPane.webviewGet.html ;
                 } else {
                     textArea.visible = true ;
                     webView.visible = false ;
