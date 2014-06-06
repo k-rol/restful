@@ -25,34 +25,19 @@ Page {
     
     actions: [
         ActionItem {
-            title: qsTr("RAW / HTML")
-            ActionBar.placement: ActionBarPlacement.OnBar
-            onTriggered: {
-                if (textArea.textFormat == TextFormat.Html) { 
-                    textArea.textFormat = TextFormat.Plain 
-                } else {textArea.textFormat = TextFormat.Html}
-            }
-        },
-        ActionItem {
-            title: "Edit"
-            ActionBar.placement: ActionBarPlacement.OnBar
-            onTriggered: {
-                if (textArea.editable == false) { 
-                    textArea.editable = true 
-                } else {textArea.editable = false} 
-            }
-        },
-        ActionItem {
-            title: "WebView"
+            title: "Web View"
             ActionBar.placement: ActionBarPlacement.OnBar
             onTriggered: {
                 if (textArea.visible == true) {
                     textArea.visible = false ;
                     webView.visible = true ;
                     webView.html = getNavPane.webviewGet.html ;
+                    //webView.html = textArea.text ;
+                    title = "Text View"
                 } else {
                     textArea.visible = true ;
                     webView.visible = false ;
+                    title = "Web View"
                 }
             }
         }

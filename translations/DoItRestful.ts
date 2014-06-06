@@ -8,11 +8,4 @@
         <translation type="unfinished"></translation>
     </message>
 </context>
-<context>
-    <name>Preview</name>
-    <message>
-        <source>RAW / HTML</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
 </TS>
