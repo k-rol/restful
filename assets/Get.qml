@@ -129,30 +129,18 @@ NavigationPane {
                 rightPadding: 19.0
                 horizontalAlignment: HorizontalAlignment.Center
                 Button {
-                    text: "Raw / Html" 
-                    onClicked: {
-                        if (responseArea.textFormat == TextFormat.Html)
-                        {
-                            responseArea.textFormat = TextFormat.Plain
-                        }
-                        else {
-                            responseArea.textFormat = TextFormat.Html
-                        }
-                    }
-                }
-                Button {
                     text: "Head"
                     onClicked: {
-                        var headNavPane = headerDefinition.createObject()
-                        getNavPane.push(headNavPane)
+                        var page = headerDefinition.createObject()
+                        getNavPane.push(page)
                     }
                 }
                 Button {
                     text: "Body"
                     onClicked: {
                         //previewtext = responseArea.text
-                    	var previewNavPane = previewDefinition.createObject()
-                    	getNavPane.push(previewNavPane)
+                    	var page = previewDefinition.createObject()
+                    	getNavPane.push(page)
                     }
                 }
             }
@@ -185,7 +173,7 @@ NavigationPane {
                 maxWidth: 750.0
                 minHeight: 550.0
                 minWidth: 700.0
-                textFormat: TextFormat.Html
+                textFormat: TextFormat.Plain
                 editable: false
                 scrollMode: TextAreaScrollMode.Elastic
                            
@@ -209,5 +197,7 @@ NavigationPane {
             }
         ]
     }//Page
-
+    onPopTransitionEnded: {
+        page.destroy();
+    }
 }
