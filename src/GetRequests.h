@@ -25,10 +25,13 @@ private Q_SLOTS:
 	void onGetReply();
 
 Q_SIGNALS:
-	void getReceived(const QString &response, const QString &toSendRawHeader, const QString &toSendhttpStatusCode, const QString &toSendContentLength);
+	void getReceived(const QString &response, const QString &toSendRawHeader, const QString &toSendhttpStatusCode, const QString &toSendContentLength, const QString &hexCode);
 
 private:
     QNetworkAccessManager* m_networkAccessManager;
+    QString hexCodeToText(const QByteArray &hexCode);
+
+
 };
 
 #endif /* GETREQUESTS_H_ */

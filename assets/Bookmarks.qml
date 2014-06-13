@@ -24,7 +24,7 @@ Page {
                         
                         title: qsTr(ListItemData.name)
                         description: qsTr(ListItemData.link)
-                        
+                        status: qsTr("GET")
 
                     }
                 }

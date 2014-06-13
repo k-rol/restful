@@ -9,7 +9,7 @@ Page {
             preferredHeight: 1139
             editable: false
             textFormat: TextFormat.Plain
-            visible: true
+            visible: false
 
         }
         WebView {
@@ -19,6 +19,14 @@ Page {
             visible: false
             settings.defaultTextCodecName: "UTF-16"
 
+        }
+        TextArea {
+            id: hexArea
+            //text: "00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15"
+            text: getNavPane.hextext
+            
+            preferredWidth: 766.0
+            preferredHeight: 1139
         }
 
     }
@@ -40,6 +48,10 @@ Page {
                     title = "Web View"
                 }
             }
+        },
+        ActionItem {
+            title: "Hex View"
+            ActionBar.placement: ActionBarPlacement.OnBar
         }
         ]
 

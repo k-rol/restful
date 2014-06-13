@@ -38,13 +38,17 @@ void GetRequests::onGetReply()
 	QString toSendRawHeader;
 	QString toSendContentLength;
 	QString toSendhttpStatusCode;
-
+	QString hexCode;
+	QString hexToText;
 	if(reply) {
 		if (reply->error() == QNetworkReply::NoError) {
 			const int available = reply->bytesAvailable();
 			if(available > 0) {
 				const QByteArray buffer(reply->readAll());
 				response = buffer;
+				//hexCode = buffer.toHex();
+				hexCode = hexCodeToText(buffer.toHex());
+
 
 				//reads rawheader
 				QList<QByteArray> headerList = reply->rawHeaderList();
@@ -84,9 +88,28 @@ void GetRequests::onGetReply()
 	}
 
 	//qDebug() << response;
-    emit getReceived(response, toSendRawHeader, toSendhttpStatusCode, toSendContentLength);
+    emit getReceived(response, toSendRawHeader, toSendhttpStatusCode, toSendContentLength, hexCode);
 }
 
+
+QString GetRequests::hexCodeToText(const QByteArray &hexCode)
+{
+	QString hexString;
+	for (int i = 0; i < hexCode.count(); i+=2) {
+		if(i % 32 == 0) {
+			hexString += "\n";
+		}
+		hexString += hexCode.data()[i];
+		hexString += hexCode.data()[i+1];
+		hexString += " ";
+
+	}
+	qDebug() <<"hexString:";
+	qDebug() << hexString;
+
+	//QString hexAscii
+	return hexString;
+}
 
 
 GetRequests::~GetRequests() {

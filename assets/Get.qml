@@ -10,6 +10,7 @@ NavigationPane {
     property string headertext
     property string statuscode
     property string length
+    property string hextext
     Page {    
 
         titleBar: TitleBar {
@@ -32,6 +33,8 @@ NavigationPane {
                         labelStatusCode.visible = true
                         labelLength.visible = true
                         console.debug(response)
+                        //hexArea
+                        hextext = hexCode;
                     }
                 }
             ]
@@ -83,7 +86,10 @@ NavigationPane {
                     
                 }
             }
-            
+            TextArea {
+                hintText: "Body"
+                visible: false;
+            }
             Container {
                 layout: StackLayout {
                     orientation: LayoutOrientation.LeftToRight
