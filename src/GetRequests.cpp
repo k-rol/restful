@@ -39,15 +39,17 @@ void GetRequests::onGetReply()
 	QString toSendContentLength;
 	QString toSendhttpStatusCode;
 	QString hexCode;
-	QString hexToText;
+	QString hexText;
 	if(reply) {
 		if (reply->error() == QNetworkReply::NoError) {
 			const int available = reply->bytesAvailable();
 			if(available > 0) {
 				const QByteArray buffer(reply->readAll());
 				response = buffer;
-				//hexCode = buffer.toHex();
-				hexCode = hexCodeToText(buffer.toHex());
+
+				hexCode = hexSortCode(buffer.toHex());
+				hexText = hexCodeToText(buffer.toHex());
+
 
 
 				//reads rawheader
@@ -88,17 +90,78 @@ void GetRequests::onGetReply()
 	}
 
 	//qDebug() << response;
-    emit getReceived(response, toSendRawHeader, toSendhttpStatusCode, toSendContentLength, hexCode);
+    emit getReceived(response, toSendRawHeader, toSendhttpStatusCode, toSendContentLength, hexCode, hexText);
 }
 
 
 QString GetRequests::hexCodeToText(const QByteArray &hexCode)
 {
+	QByteArray hexArray = QByteArray::fromHex(hexCode);
+	QString hexAscii;
+
+/*	for (int i = 0; i < hexArray.count(); i+=2) {
+		if(i % 16 == 0) {
+			hexAscii += "\n";
+		}
+		QByteArray hexdouble = QString("0A").toAscii().toHex();
+
+		if (1 == 2){
+			qDebug() << "YES";
+			if (hexArray.data()[i+1] == 'A') {
+				hexAscii += ".";
+			} else {
+				hexAscii += hexArray.data()[i];
+				hexAscii += hexArray.data()[i+1];
+			}
+
+		} else {
+			hexAscii += hexArray.data()[i];
+			hexAscii += hexArray.data()[i+1];
+		}
+
+	}
+*/
+	/*QString hexString;
+	for (int i = 0; i < hexCode.count(); i+=2) {
+		QString hexDouble;
+		hexDouble = hexCode.data()[i] + hexCode.data()[i+1];
+		if (hexDouble == "0A"){
+			hexString += ".";//Hex = 2E
+		}else {
+			hexString += hexCode.data()[i];
+			hexString += hexCode.data()[i+1];
+		}
+
+	}*/
+
+	for (int i = 0; i < hexArray.count(); i++) {
+
+
+	}
+
+	qDebug() << "FROM HEX";
+	qDebug() << hexString;
+	return "";
+}
+
+QString GetRequests::hexSortCode(const QByteArray &hexCode)
+{
+	int hexNum;
+
 	QString hexString;
 	for (int i = 0; i < hexCode.count(); i+=2) {
 		if(i % 32 == 0) {
 			hexString += "\n";
 		}
+
+//		try {
+//			qDebug() << "hexNUM:";
+//			hexNum = hexCode.data()[i];
+//			qDebug() << hexNum;
+//		} catch (int e) {
+//			qDebug() << "NOP!";
+//		}
+
 		hexString += hexCode.data()[i];
 		hexString += hexCode.data()[i+1];
 		hexString += " ";
@@ -108,7 +171,7 @@ QString GetRequests::hexCodeToText(const QByteArray &hexCode)
 	qDebug() << hexString;
 
 	//QString hexAscii
-	return hexString;
+	return hexString.toUpper();
 }
 
 
