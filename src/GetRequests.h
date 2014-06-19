@@ -31,7 +31,8 @@ private:
     QNetworkAccessManager* m_networkAccessManager;
     QString hexCodeToText(const QByteArray &hexCode);
     QString hexSortCode(const QByteArray &hexCode);
-
+    int hexToInt(char c);
+    int hexToLetter(char c, char d);
 
 };
 

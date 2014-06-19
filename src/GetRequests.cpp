@@ -14,6 +14,8 @@
 #include <QTimer>
 #include <bb/data/JsonDataAccess>
 #include <QNetworkCookie>
+//#include <stdio.h>
+//#include <string.h>
 
 GetRequests::GetRequests(QObject* parent)
 	: QObject(parent)
@@ -134,19 +136,56 @@ QString GetRequests::hexCodeToText(const QByteArray &hexCode)
 
 	}*/
 
-	for (int i = 0; i < hexArray.count(); i++) {
-
+/*	for (int i = 0; i < hexArray.toHex().count(); i++) {
+		hexChar[i] = hexArray.toHex().data()[i];
 
 	}
+	QString hexString = hexChar;*/
 
+/*	QString String = QByteArray::fromHex("706574756c613031");
+	QByteArray ByteArray1 = String.toUtf8();
+	const char* chArr1 = ByteArray1.constData();
+	QByteArray ByteArray2 = QByteArray::fromHex(chArr1);
+	const char* chArr2 = ByteArray2.constData();
+	QString hexString = QString::fromUtf8(chArr2);*/
+
+	const char* hexChar = hexCode;
+	int length = strlen(hexChar);
+	char buf = 0;
 	qDebug() << "FROM HEX";
-	qDebug() << hexString;
+	for(int i = 0; i < length; i++) {
+		if(i % 2 != 0) {
+			printf("%c", hexToLetter(buf,hexChar[i]));
+		} else {
+			buf = hexChar[i];
+		}
+	}
+
+	//qDebug() << "FROM HEX";
+	//qDebug() << hexString;
+	//qDebug() << hexAscii;
 	return "";
+}
+
+int GetRequests::hexToInt(char c)
+{
+	int first = c / 16 - 3;
+	int second = c % 16;
+	int result = first*10 + second;
+	if (result > 9) result--;
+	return result;
+}
+
+int GetRequests::hexToLetter(char c, char d)
+{
+	int high = hexToInt(c) * 16;
+	int low = hexToInt(d);
+	return high+low;
 }
 
 QString GetRequests::hexSortCode(const QByteArray &hexCode)
 {
-	int hexNum;
+
 
 	QString hexString;
 	for (int i = 0; i < hexCode.count(); i+=2) {
