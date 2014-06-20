@@ -98,72 +98,35 @@ void GetRequests::onGetReply()
 
 QString GetRequests::hexCodeToText(const QByteArray &hexCode)
 {
-	QByteArray hexArray = QByteArray::fromHex(hexCode);
+	//QByteArray hexArray = QByteArray::fromHex(hexCode);
 	QString hexAscii;
 
-/*	for (int i = 0; i < hexArray.count(); i+=2) {
-		if(i % 16 == 0) {
-			hexAscii += "\n";
-		}
-		QByteArray hexdouble = QString("0A").toAscii().toHex();
-
-		if (1 == 2){
-			qDebug() << "YES";
-			if (hexArray.data()[i+1] == 'A') {
-				hexAscii += ".";
-			} else {
-				hexAscii += hexArray.data()[i];
-				hexAscii += hexArray.data()[i+1];
-			}
-
-		} else {
-			hexAscii += hexArray.data()[i];
-			hexAscii += hexArray.data()[i+1];
-		}
-
-	}
-*/
-	/*QString hexString;
-	for (int i = 0; i < hexCode.count(); i+=2) {
-		QString hexDouble;
-		hexDouble = hexCode.data()[i] + hexCode.data()[i+1];
-		if (hexDouble == "0A"){
-			hexString += ".";//Hex = 2E
-		}else {
-			hexString += hexCode.data()[i];
-			hexString += hexCode.data()[i+1];
-		}
-
-	}*/
-
-/*	for (int i = 0; i < hexArray.toHex().count(); i++) {
-		hexChar[i] = hexArray.toHex().data()[i];
-
-	}
-	QString hexString = hexChar;*/
-
-/*	QString String = QByteArray::fromHex("706574756c613031");
-	QByteArray ByteArray1 = String.toUtf8();
-	const char* chArr1 = ByteArray1.constData();
-	QByteArray ByteArray2 = QByteArray::fromHex(chArr1);
-	const char* chArr2 = ByteArray2.constData();
-	QString hexString = QString::fromUtf8(chArr2);*/
-
-	const char* hexChar = hexCode;
+	const char* hexChar = hexCode.toUpper();
 	int length = strlen(hexChar);
 	char buf = 0;
-	qDebug() << "FROM HEX";
+
 	for(int i = 0; i < length; i++) {
 		if(i % 2 != 0) {
-			printf("%c", hexToLetter(buf,hexChar[i]));
+			//printf("%c", hexToLetter(buf,hexChar[i]));
+			//hexAscii += static_cast<char>(hexToLetter(buf,hexChar[i]));
+            switch (hexToLetter(buf,hexChar[i])) {
+            case 00:
+                break;
+            case 10:
+            	hexAscii += ".";
+                break;
+            default:
+                hexAscii += static_cast<char>(hexToLetter(buf,hexChar[i]));
+                break;
+            }
+
 		} else {
 			buf = hexChar[i];
 		}
 	}
 
-	//qDebug() << "FROM HEX";
-	//qDebug() << hexString;
-	//qDebug() << hexAscii;
+	qDebug() << "FROM HEX";
+	qDebug() << hexAscii;
 	return "";
 }
 
