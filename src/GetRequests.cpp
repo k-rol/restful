@@ -107,18 +107,34 @@ QString GetRequests::hexCodeToText(const QByteArray &hexCode)
 
 	for(int i = 0; i < length; i++) {
 		if(i % 2 != 0) {
+		    int digitChar = hexToLetter(buf,hexChar[i]);
+
 			//printf("%c", hexToLetter(buf,hexChar[i]));
 			//hexAscii += static_cast<char>(hexToLetter(buf,hexChar[i]));
-            switch (hexToLetter(buf,hexChar[i])) {
-            case 00:
-                break;
-            case 10:
-            	hexAscii += ".";
-                break;
-            default:
-                hexAscii += static_cast<char>(hexToLetter(buf,hexChar[i]));
-                break;
-            }
+//		    qDebug() << hexToLetter(buf,hexChar[i]);
+//            switch (hexToLetter(buf,hexChar[i])) {
+//            case 00:
+//                //hexAscii += ".";
+//                break;
+//            case 8:
+//                //hexAscii += ".";
+//                break;
+//            case 10:
+//            	hexAscii += ".";
+//                break;
+//            default:
+//                hexAscii += static_cast<char>(hexToLetter(buf,hexChar[i]));
+//                break;
+//            }
+		    qDebug() << digitChar;
+		    if(static_cast<int>(digitChar) <= 9 || static_cast<int>(digitChar) == 10) {
+
+		        digitChar = 46;
+		    }
+		    qDebug() << digitChar;
+
+		    hexAscii += static_cast<char>(digitChar);
+
 
 		} else {
 			buf = hexChar[i];
