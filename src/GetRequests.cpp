@@ -118,7 +118,7 @@ QString GetRequests::hexCodeToText(const QByteArray &hexCode)
 		    int digitChar = hexToAscii(buf,hexChar[i]);
 
 
-		    if (digitChar <= 10) {
+		    if (digitChar <= 31) {
 		        wholeChars[charsCounter] = '.';
 		    }
 		    else {
@@ -134,12 +134,16 @@ QString GetRequests::hexCodeToText(const QByteArray &hexCode)
 
 
     for (int i = 0; i < AsciiLength; ++i) {
+        if(i % 16 == 0) {
+            hexAscii += "\n";
+        }
         hexAscii += wholeChars[i];
     }
 
+
 	qDebug() << "FROM HEX";
 	qDebug() << hexAscii;
-	return "";
+	return hexAscii;
 }
 
 char GetRequests::hexToAscii(char first, char second)
