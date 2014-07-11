@@ -15,7 +15,10 @@
 #include <bb/data/JsonDataAccess>
 #include <QNetworkCookie>
 //#include <stdio.h>
+#include <iostream>
 //#include <string.h>
+
+
 
 GetRequests::GetRequests(QObject* parent)
 	: QObject(parent)
@@ -105,45 +108,49 @@ QString GetRequests::hexCodeToText(const QByteArray &hexCode)
 	int length = strlen(hexChar);
 	char buf = 0;
 
+	int AsciiLength = length / 2;
+	int charsCounter = 0;
+	char wholeChars[AsciiLength];
+
 	for(int i = 0; i < length; i++) {
 		if(i % 2 != 0) {
-		    int digitChar = hexToLetter(buf,hexChar[i]);
+		    //int digitChar = hexToLetter(buf,hexChar[i]);
+		    int digitChar = hexToAscii(buf,hexChar[i]);
 
-			//printf("%c", hexToLetter(buf,hexChar[i]));
-			//hexAscii += static_cast<char>(hexToLetter(buf,hexChar[i]));
-//		    qDebug() << hexToLetter(buf,hexChar[i]);
-//            switch (hexToLetter(buf,hexChar[i])) {
-//            case 00:
-//                //hexAscii += ".";
-//                break;
-//            case 8:
-//                //hexAscii += ".";
-//                break;
-//            case 10:
-//            	hexAscii += ".";
-//                break;
-//            default:
-//                hexAscii += static_cast<char>(hexToLetter(buf,hexChar[i]));
-//                break;
-//            }
-		    qDebug() << digitChar;
-		    if(static_cast<int>(digitChar) <= 9 || static_cast<int>(digitChar) == 10) {
 
-		        digitChar = 46;
+		    if (digitChar <= 10) {
+		        wholeChars[charsCounter] = '.';
 		    }
-		    qDebug() << digitChar;
+		    else {
+		        wholeChars[charsCounter] = hexToAscii(buf,hexChar[i]);
+            }
 
-		    hexAscii += static_cast<char>(digitChar);
-
+            charsCounter++;
 
 		} else {
 			buf = hexChar[i];
 		}
 	}
 
+
+    for (int i = 0; i < AsciiLength; ++i) {
+        hexAscii += wholeChars[i];
+    }
+
 	qDebug() << "FROM HEX";
 	qDebug() << hexAscii;
 	return "";
+}
+
+char GetRequests::hexToAscii(char first, char second)
+{
+char hex[5], *stop;
+hex[0] = '0';
+hex[1] = 'x';
+hex[2] = first;
+hex[3] = second;
+hex[4] = 0;
+return strtol(hex, &stop, 16);
 }
 
 int GetRequests::hexToInt(char c)

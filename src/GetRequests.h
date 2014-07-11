@@ -33,6 +33,7 @@ private:
     QString hexSortCode(const QByteArray &hexCode);
     int hexToInt(char c);
     int hexToLetter(char c, char d);
+    char hexToAscii(char first, char second);
 
 };
 
