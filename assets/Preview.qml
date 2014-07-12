@@ -7,7 +7,7 @@ Page {
             base: SystemDefaults.TextStyles.BodyText
             rules: [
                 FontFaceRule {
-                    source: "asset:///consola.ttf"
+                    source: "asset:///Lekton-Bold.ttf"
                     fontFamily: "ConsolaFont"            
                 }
             ]
@@ -15,6 +15,61 @@ Page {
         }
     ]
     Container {
+        SegmentedControl {
+            id: segcontrol
+            Option {
+                id: websegcontrol
+                text: "WEB"
+                value: 1
+                
+            }
+            Option {
+                id: textsegcontrol
+                text: "TEXT"
+                value: 2
+            }
+            Option {
+                id: hexsegcontrol
+                text: "HEX"
+                value: 3
+            }
+            Option {
+                id: asciisegcontrol
+                text: "ASCII"
+                value: 4
+            }
+            onSelectedOptionChanged: {
+//                if (selectedOption == websegcontrol){
+//                    webViews.visible = true
+//                    hexViews.visible = false
+//                } 
+//                else {
+//                    webViews.visible = false
+//                    hexViews.visible = true
+//                }
+                var value = segcontrol.selectedIndex
+                textArea.visible = false
+                webView.visible = false
+                hexArea.visible = false
+                hexAsciiArea.visible = false
+                switch (value) {
+                    case 0:
+                        webView.visible = true
+                        webView.html = getNavPane.webviewGet.html
+                        break;
+                    case 1:
+                        textArea.visible = true
+                        break;
+                    case 2:
+                        hexArea.visible = true
+                        break;
+                    case 3:
+                        hexAsciiArea.visible = true
+                        break;
+                }
+                
+            }
+        }
         Container {
             id: webViews
             TextArea {
@@ -24,14 +79,14 @@ Page {
                 preferredHeight: 1139
                 editable: false
                 textFormat: TextFormat.Plain
-                visible: false
+                //visible: false
             
             }
             WebView {
                 id: webView
                 preferredWidth: 766.0
                 preferredHeight: 1139
-                visible: false
+                //visible: true
                 settings.defaultTextCodecName: "UTF-16"
 
             }
@@ -41,12 +96,14 @@ Page {
             TextArea {
                 id: hexArea
                 textStyle.base: myStyle.style
-                text: "00 01 02 03 04 D5 06 D7 08 09 10 11 12 13 14 15 00 1D 18 19 20 21 22 2E 24 25 26 2D 28 29 30 EE 32 33 34 3C C6 D7 38 39 40 41 42 D3 44 45 46 47 48 49 50"
-                //text: getNavPane.hextext
+                //text: "00 01 02 03 04 D5 06 D7 08 09 10 11 12 13 14 15 00 1D 18 19 20 21 22 2E 24 25 26 2D 28 29 30 EE 32 33 34 3C C6 D7 38 39 40 41 42 D3 44 45 46 47 48 49 50"
+                text: getNavPane.hextext
                 preferredWidth: 766.0
                 preferredHeight: 1139
+                //textStyle.fontSize: FontSize.XLarge
                 textFit.maxFontSizeValue: 2.0
-
+                editable: false
+                //visible: false
             }
             TextArea {
                 id: hexAsciiArea
@@ -55,49 +112,14 @@ Page {
                 textFit.maxFontSizeValue: 7 
                 preferredWidth: 766.0
                 preferredHeight: 1139
-                visible: false
+                //visible: false
+                editable: false
             }
         }
         
 
     }
     
-    actions: [
-        ActionItem {
-            title: "Web View"
-            ActionBar.placement: ActionBarPlacement.OnBar
-            onTriggered: {
-                hexViews.visible = false
-                webViews.visible = true
-                if (textArea.visible == true) {
-                    textArea.visible = false ;
-                    webView.visible = true ;
-                    webView.html = getNavPane.webviewGet.html ;
-                    //webView.html = textArea.text ;
-                    title = "Text View"
-                } else {
-                    textArea.visible = true ;
-                    webView.visible = false ;
-                    title = "Web View"
-                }
-            }
-        },
-        ActionItem {
-            title: "Hex View"
-            ActionBar.placement: ActionBarPlacement.OnBar
-            onTriggered: {
-                hexViews.visible = true
-                webViews.visible = false
-                if (hexArea.visible == true ){
-                    hexArea.visible = false
-                    hexAsciiArea.visible = true
-                } else {
-                    hexArea.visible = true
-                    hexAsciiArea.visible = false
-                }
-            }
-        }
-        ]
 
     paneProperties: NavigationPaneProperties {
         backButton: ActionItem {
@@ -106,5 +128,13 @@ Page {
             }
         }
     
+    }
+    onCreationCompleted: {
+        textArea.visible = false
+        webView.visible = false
+        hexArea.visible = false
+        hexAsciiArea.visible = false
+        webView.visible = true ;
+        webView.html = getNavPane.webviewGet.html ;
     }
 }

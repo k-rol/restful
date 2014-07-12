@@ -1,11 +1,12 @@
 1
-9
+10
 Bookmarks.qml
-consola.ttf
 Get.qml
 Head.qml
-images/bookmarks.png
-images/ic_copy.png
-images/rest.png
+Lekton-Bold.ttf
+Lekton-Regular.ttf
 main.qml
 Preview.qml
+images\bookmarks.png
+images\ic_copy.png
+images\rest.png
