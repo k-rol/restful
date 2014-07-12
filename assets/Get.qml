@@ -11,6 +11,7 @@ NavigationPane {
     property string statuscode
     property string length
     property string hextext
+    property string hexascii
     Page {    
 
         titleBar: TitleBar {
@@ -34,6 +35,7 @@ NavigationPane {
                         labelLength.visible = true
                         console.debug(response)
                         //hexArea
+                        hexascii = hexText;
                         hextext = hexCode;
                     }
                 }

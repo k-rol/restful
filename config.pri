@@ -76,6 +76,7 @@ config_pri_assets {
         $$quote($$BASEDIR/assets/Get.qml) \
         $$quote($$BASEDIR/assets/Head.qml) \
         $$quote($$BASEDIR/assets/Preview.qml) \
+        $$quote($$BASEDIR/assets/consola.ttf) \
         $$quote($$BASEDIR/assets/images/bookmarks.png) \
         $$quote($$BASEDIR/assets/images/ic_copy.png) \
         $$quote($$BASEDIR/assets/images/rest.png) \
