@@ -119,8 +119,19 @@ Page {
         
 
     }
+    actions: [
+        InvokeActionItem {
+            ActionBar.placement: ActionBarPlacement.OnBar
+            query {
+                mimeType: "text/plain"
+                
+            }
+            onTriggered: {
+            data = getNavPane.hexascii 
+            }
+        }
+    ]
     
-
     paneProperties: NavigationPaneProperties {
         backButton: ActionItem {
             onTriggered: {

@@ -76,7 +76,6 @@ config_pri_assets {
         $$quote($$BASEDIR/assets/Get.qml) \
         $$quote($$BASEDIR/assets/Head.qml) \
         $$quote($$BASEDIR/assets/Lekton-Bold.ttf) \
-        $$quote($$BASEDIR/assets/Lekton-Regular.ttf) \
         $$quote($$BASEDIR/assets/Preview.qml) \
         $$quote($$BASEDIR/assets/images/bookmarks.png) \
         $$quote($$BASEDIR/assets/images/ic_copy.png) \
@@ -90,6 +89,7 @@ config_pri_source_group1 {
         $$quote($$BASEDIR/src/ListDataModel.cpp) \
         $$quote($$BASEDIR/src/PostRequests.cpp) \
         $$quote($$BASEDIR/src/QBookmarks.cpp) \
+        $$quote($$BASEDIR/src/ShareInvoke.cpp) \
         $$quote($$BASEDIR/src/applicationui.cpp) \
         $$quote($$BASEDIR/src/main.cpp)
 
@@ -98,6 +98,7 @@ config_pri_source_group1 {
         $$quote($$BASEDIR/src/ListDataModel.h) \
         $$quote($$BASEDIR/src/PostRequests.h) \
         $$quote($$BASEDIR/src/QBookmarks.h) \
+        $$quote($$BASEDIR/src/ShareInvoke.h) \
         $$quote($$BASEDIR/src/applicationui.hpp)
 }
 
