@@ -22,7 +22,7 @@ TabbedPane {
     property string getcommand
     property string gettitlebar
     getcommand: "http://"
-    gettitlebar: "GET"
+    gettitlebar: "RESTful"
     showTabsOnActionBar: true
     Tab {
         id: getTab

@@ -20,6 +20,7 @@
 #include <bb/cascades/QmlDocument>
 #include <bb/cascades/AbstractPane>
 #include <bb/cascades/LocaleHandler>
+#include <bb/system/Clipboard>
 
 #include <QDebug>
 #include <QBookmarks.h>
@@ -27,6 +28,7 @@
 
 
 using namespace bb::cascades;
+using namespace bb::system;
 
 ApplicationUI::ApplicationUI(bb::cascades::Application *app) :
         QObject(app)
@@ -48,6 +50,9 @@ ApplicationUI::ApplicationUI(bb::cascades::Application *app) :
     // Create scene document from main.qml asset, the parent is set
     // to ensure the document gets destroyed properly at shut down.
     QmlDocument *qml = QmlDocument::create("asset:///main.qml").parent(this);
+
+    //Set context for clipboard method
+    qml->setContextProperty("_applicationui",this);
 
     //Set context for ListDataModel
     ListDataModel *listDataModel = new ListDataModel(this);
@@ -71,4 +76,11 @@ void ApplicationUI::onSystemLanguageChanged()
     if (m_pTranslator->load(file_name, "app/native/qm")) {
         QCoreApplication::instance()->installTranslator(m_pTranslator);
     }
+}
+
+bool ApplicationUI::clipboardCopy(QByteArray content)
+{
+    Clipboard clipboard;
+    clipboard.clear();
+    return clipboard.insert("text/plain", content);
 }

@@ -43,6 +43,7 @@ class ApplicationUI : public QObject
 public:
     ApplicationUI(bb::cascades::Application *app);
     virtual ~ApplicationUI() { }
+    Q_INVOKABLE bool clipboardCopy(QByteArray content);
 
 private slots:
     void onSystemLanguageChanged();

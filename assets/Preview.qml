@@ -1,4 +1,5 @@
 import bb.cascades 1.2
+import bb.system 1.2
 
 Page {
     attachedObjects: [
@@ -12,6 +13,9 @@ Page {
                 }
             ]
             fontFamily: "ConsolaFont, consola"
+        },
+        SystemToast {
+            id: copyToast
         }
     ]
     Container {
@@ -52,6 +56,7 @@ Page {
                 webView.visible = false
                 hexArea.visible = false
                 hexAsciiArea.visible = false
+                
                 switch (value) {
                     case 0:
                         webView.visible = true
@@ -79,7 +84,12 @@ Page {
                 preferredHeight: 1139
                 editable: false
                 textFormat: TextFormat.Plain
-                //visible: false
+                onVisibleChanged: {
+                    if(textArea.visible)
+                    {
+                        enableButtons()
+                    }
+                }
             
             }
             WebView {
@@ -88,7 +98,12 @@ Page {
                 preferredHeight: 1139
                 //visible: true
                 settings.defaultTextCodecName: "UTF-16"
-
+                onVisibleChanged: {
+                    if(webView.visible)
+                    {
+                        disableButtons()
+                    }
+                }
             }
         }
         Container {
@@ -103,7 +118,12 @@ Page {
                 //textStyle.fontSize: FontSize.XLarge
                 textFit.maxFontSizeValue: 2.0
                 editable: false
-                //visible: false
+                onVisibleChanged: {
+                    if(hexArea.visible)
+                    {
+                        enableButtons()
+                    }
+                }
             }
             TextArea {
                 id: hexAsciiArea
@@ -112,23 +132,47 @@ Page {
                 textFit.maxFontSizeValue: 7 
                 preferredWidth: 766.0
                 preferredHeight: 1139
-                //visible: false
                 editable: false
+                onVisibleChanged: {
+                    if(hexAsciiArea.visible)
+                    {
+                        enableButtons()
+                    }
+                }
             }
         }
         
 
     }
     actions: [
+        ActionItem {
+            id: copybutton
+            ActionBar.placement: ActionBarPlacement.OnBar
+            title: "Copy as text"
+            
+            onTriggered: {
+                if (_applicationui.clipboardCopy(returningText()))
+                {
+                    copyToast.body = "Text Now In Clipboard"
+                    copyToast.show()
+                } else {
+                    
+                }
+                
+            }
+            
+        },
         InvokeActionItem {
+            id: sharebutton
             ActionBar.placement: ActionBarPlacement.OnBar
             query {
                 mimeType: "text/plain"
-                
+                invokeActionId: "bb.action.SHARE"
             }
             onTriggered: {
-            data = getNavPane.hexascii 
+                data = returningText()
             }
+            title: "Share Current Tab"
         }
     ]
     
@@ -138,6 +182,7 @@ Page {
                 getNavPane.pop();
             }
         }
+        
     
     }
     onCreationCompleted: {
@@ -147,5 +192,35 @@ Page {
         hexAsciiArea.visible = false
         webView.visible = true ;
         webView.html = getNavPane.webviewGet.html ;
+        copybutton.enabled = false
+        sharebutton.enabled = false
+        
+        
     }
+    function returningText() {
+        var data;
+        switch (segcontrol.selectedIndex) {
+            case 0:
+                break;
+            case 1:
+                data = getNavPane.webviewGet.html
+                break;
+            case 2:
+                data = getNavPane.hextext
+                break;
+            case 3:
+                data = getNavPane.hexascii 
+                break;
+        }
+        return data
+    }
+    function enableButtons()
+    {
+        copybutton.enabled = true
+        sharebutton.enabled = true
+    }
+    function disableButtons() {
+        copybutton.enabled = false
+        sharebutton.enabled = false
+    } 
 }
