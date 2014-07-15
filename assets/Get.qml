@@ -44,7 +44,14 @@ NavigationPane {
                 id: dropdownservice
                 title: "REST Service"
                 onSelectedIndexChanged: {
-                    console.log("SelectedIndex was changed to " + selectedIndex);
+                    switch (selectedIndex) {
+                        case 0:
+                            bodyArea.visible = false
+                            break;
+                        case 1:
+                            bodyArea.visible = true
+                            break;
+                    }
                 }
                 Option {
                     text: "GET"
@@ -87,10 +94,6 @@ NavigationPane {
                     }
                     
                 }
-            }
-            TextArea {
-                hintText: "Body"
-                visible: false;
             }
             Container {
                 layout: StackLayout {
@@ -151,6 +154,11 @@ NavigationPane {
                     	getNavPane.push(page)
                     }
                 }
+            }
+            TextArea {
+                id: bodyArea
+                hintText: "Body"
+                visible: false;
             }
             Container {
                 layout: StackLayout {
